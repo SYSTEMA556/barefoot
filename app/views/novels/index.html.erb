@@ -1,0 +1,18 @@
+<h1>小説一覧</h1>
+
+<% if logged_in? %>
+  <p>ようこそ、<%= current_user.user_name %>さん</p>
+  <%= link_to "小説を投稿する", new_novel_path %> |
+  <%= link_to "ログアウト", logout_path, method: :delete %>
+<% else %>
+  <%= link_to "ログイン", new_session_path %> |
+  <%= link_to "新規登録", new_user_path %>
+<% end %>
+
+<ul>
+  <% @novels.each do |novel| %>
+    <li>
+      <%= link_to novel.title, novel_path(novel) %>（投稿者: <%= novel.user.user_name %>）
+    </li>
+  <% end %>
+</ul>

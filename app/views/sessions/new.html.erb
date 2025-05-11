@@ -1,0 +1,19 @@
+<h1>ログイン</h1>
+
+<%= form_with url: sessions_path, local: true do |f| %>
+  <div>
+    <%= label_tag :email, "メールアドレス" %><br>
+    <%= email_field_tag :email %>
+  </div>
+
+  <div>
+    <%= label_tag :password, "パスワード" %><br>
+    <%= password_field_tag :password %>
+  </div>
+
+  <div>
+    <%= submit_tag "ログイン" %>
+  </div>
+<% end %>
+
+<%= link_to "新規登録はこちら", new_user_path %>

@@ -1,0 +1,9 @@
+<h1><%= @novel.title %></h1>
+
+<p>投稿者: <%= @novel.user.user_name %></p>
+
+<div>
+  <%= simple_format(@novel.body) %>
+</div>
+
+<%= link_to "一覧に戻る", novels_path %>

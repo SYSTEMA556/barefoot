@@ -1,0 +1,19 @@
+<h1>小説を投稿する</h1>
+
+<%= form_with model: @novel, local: true do |f| %>
+  <div>
+    <%= f.label :title, "タイトル" %><br>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :body, "本文" %><br>
+    <%= f.text_area :body, rows: 10 %>
+  </div>
+
+  <div>
+    <%= f.submit "投稿する" %>
+  </div>
+<% end %>
+
+<%= link_to "一覧に戻る", novels_path %>
