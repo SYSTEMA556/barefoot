@@ -3,7 +3,8 @@ class NovelsController < ApplicationController
   before_action :require_login, only: [:new, :create]
 
   def index
-    @novels = Novel.includes(:user).order(created_at: :desc)
+
+    @novels = Novel.includes(:user).order(created_at: :desc).page(params[:page]).per(20)
   end
 
   def show

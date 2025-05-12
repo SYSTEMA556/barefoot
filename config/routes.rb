@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  get 'tags/index'
+  get 'tags/show'
   root "novels#index"
   resources :novels, only: [:index, :show, :new, :create]
+  resources :tags, only: %i[index show]
 
    resources :sessions, only: [:new, :create]
    get "/session", to: "sessions#show", as: :session
@@ -8,7 +11,7 @@ Rails.application.routes.draw do
    delete "/logout", to: "sessions#destroy"
    get "/login", to: "sessions#new"
 
-   resources :users, only: [:new, :create]
+   resources :users, only: [:new, :create,:show,:index]
    get "/confirm_email", to: "users#confirm_email"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

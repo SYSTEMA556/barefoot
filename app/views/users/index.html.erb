@@ -1,0 +1,34 @@
+<!-- app/views/users/index.html.erb -->
+<section class="mb-5">
+  <h2 class="h4">ユーザー一覧</h2>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <% @users.each do |user| %>
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= link_to user.user_name, user_path(user),
+                          class: "text-decoration-none text-dark" %>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              <%= user.email %>
+            </h6>
+            <p class="card-text">
+              <small class="text-muted">
+                投稿作品数：<%= user.novels.count %>
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if defined?(paginate) %>
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <%= paginate @users, theme: 'bootstrap-5' %>
+      </ul>
+    </nav>
+  <% end %>
+</section>

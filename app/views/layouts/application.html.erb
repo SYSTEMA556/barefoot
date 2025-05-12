@@ -1,16 +1,101 @@
+<!-- app/views/layouts/application.html.erb -->
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>NovelMvp</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Novel site name</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <!-- 🌙 Bootstrap CSS（CDN）をリンク -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity=""
+    crossorigin="anonymous">
+</head>
+<body class="d-flex flex-column min-vh-100">
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <!-- 🌹 ヘッダー：拡張可能なナビバー -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Novel site name</a>
+      <!-- モバイル用トグルボタン -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navMenu"
+        aria-controls="navMenu"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <body>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item">
+            <a class="nav-link" href="/novels/new">
+              <i class="bi bi-journal-plus"></i> 新規投稿
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/bookmarks">
+              <i class="bi bi-bookmark-fill"></i> ブックマーク
+            </a>
+          </li>
+          <!-- ドロップダウン -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-list"></i> メニュー
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/about">このサイトについて</a></li>
+              <li><a class="dropdown-item" href="/contact">お問い合わせ</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/sign_up">
+              <i class="bi bi-person-plus"></i> ユーザー登録
+            </a>
+          </li>
+          <li class="nav-item">
+            <form class="d-flex" action="/search" method="get">
+              <input
+                class="form-control form-control-sm me-2"
+                type="search"
+                name="q"
+                placeholder="検索…"
+                aria-label="Search">
+              <button class="btn btn-sm btn-light" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 🖋 コンテンツ -->
+  <main class="flex-fill container py-4">
     <%= yield %>
-  </body>
+  </main>
+
+  <!-- 🏰 フッター -->
+  <footer class="bg-light text-center py-3 mt-auto">
+    このサイトについて
+  </footer>
+
+  <!-- 🌙 Bootstrap JS（Popper 同梱）-->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity=""<!--ちょっと意味わからないんだけどここのSHAを無視すると動く-->
+    crossorigin="anonymous"></script>
+</body>
 </html>

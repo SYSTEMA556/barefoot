@@ -2,6 +2,7 @@
 class User < ApplicationRecord
   has_secure_password
   before_create :generate_email_token
+  has_many :novels, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
   validates :user_name, presence: true

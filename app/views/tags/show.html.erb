@@ -1,0 +1,7 @@
+<h2 class="h4 mb-3">「<%= @tag.name %>」の作品一覧</h2>
+<div class="row row-cols-1 row-cols-sm-2...">
+  <% @novels.each do |novel| %>
+    <!-- 先ほどのカードをここに再利用 -->
+  <% end %>
+</div>
+<%= paginate @novels, theme: 'bootstrap-5', class: 'mt-4 d-flex justify-content-center' %>

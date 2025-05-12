@@ -1,18 +1,90 @@
-<h1>小説一覧</h1>
+<!-- app/views/novels/index.html.erb -->
+<section class="mb-5">
+  <h2 class="h4">おしらせ：フェスティバル会場はこちら</h2>
+  <div class="alert alert-info d-flex justify-content-between align-items-start">
+    <div>
+      <i class="bi bi-info-circle-fill me-2"></i>
+      <strong>まつり１</strong><br>
+      <small class="text-muted">こんなまつりです</small>
+    </div>
+    <!-- 将来フェスティバルコントローラを作ったらパスを変更 -->
+    <a href="#" class="btn btn-sm btn-primary align-self-end">みにいく</a>
+  </div>
+</section>
 
-<% if logged_in? %>
-  <p>ようこそ、<%= current_user.user_name %>さん</p>
-  <%= link_to "小説を投稿する", new_novel_path %> |
-  <%= link_to "ログアウト", logout_path, method: :delete %>
-<% else %>
-  <%= link_to "ログイン", new_session_path %> |
-  <%= link_to "新規登録", new_user_path %>
-<% end %>
+<section class="mb-5">
+  <h2 class="h4"><i class="bi bi-activity me-1"></i>注目のタグ</h2>
+  <div class="d-flex flex-wrap gap-2">
+    <% ["恋愛","SF","冒険","ホラー","ファンタジー"].each do |tag_name| %>
+      <!-- 後で tag_path(tag) に差し替え -->
+      <a href="#" class="badge bg-secondary text-light">✔️ <%= tag_name %></a>
+    <% end %>
+  </div>
+</section>
 
-<ul>
-  <% @novels.each do |novel| %>
-    <li>
-      <%= link_to novel.title, novel_path(novel) %>（投稿者: <%= novel.user.user_name %>）
-    </li>
+<section class="mb-5">
+  <!-- 大きな注目カード（今は静的プレースホルダ。後で main_novel を流しこめばOK） -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body d-flex justify-content-between align-items-center">
+      <div>
+        <h3 class="card-title">作品タイトル</h3>
+        <p class="card-subtitle text-muted mb-2">作者名</p>
+        <span class="badge bg-info text-dark me-1">Label</span>
+        <span class="badge bg-info text-dark">Label</span>
+      </div>
+      <div><small>コメント：8</small></div>
+    </div>
+  </div>
+
+  <!-- 作品一覧グリッド -->
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    <% @novels.each do |novel| %>
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <!-- タイトルに作品詳細へのリンクを追加 -->
+            <h5 class="card-title">
+              <%= link_to novel_path(novel), class: "text-decoration-none text-dark" do %>
+                <i class="bi bi-music-note me-1"></i>
+                <%= novel.title %>
+              <% end %>
+            </h5>
+
+            <!-- 作者名に作者ページ（または作者別作品一覧）へのリンクを追加 -->
+            <h6 class="card-subtitle mb-2 text-muted">
+              <% if novel.respond_to?(:user) && novel.user.present? %>
+                <%= link_to novel.user.user_name,
+                            user_path(novel.user),
+                            class: "text-decoration-none" %>
+              <% else %>
+                作者不明
+              <% end %>
+            </h6>
+
+            <!-- タグやコメント数はそのまま -->
+            <div class="mb-2">
+              <% (novel.respond_to?(:tags) ? novel.tags : []).each do |tag| %>
+                <span class="badge bg-secondary me-1">✔️ <%= tag.name %></span>
+              <% end %>
+            </div>
+            <p class="card-text">
+              <small class="text-muted">
+                コメント：
+                <%= novel.respond_to?(:comments_count) ? novel.comments_count : novel.comments.size rescue 0 %>
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- ページネーション（Kaminari/WillPaginate 導入後に有効化） -->
+  <% if defined?(paginate) %>
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <%= paginate @novels, theme: 'bootstrap-5' %>
+      </ul>
+    </nav>
   <% end %>
-</ul>
+</section>
