@@ -1,7 +1,14 @@
 <h1><%= @novel.title %></h1>
 
-<p>投稿者: <%= @novel.user.user_name %></p>
 
+<p>
+  投稿者:
+  <% if @novel.user.present? %>
+    <%= @novel.user.user_name %>
+  <% else %>
+    <%= @novel.author_name %>
+  <% end %>
+</p>
 <div>
   <%= simple_format(@novel.body) %>
 </div>

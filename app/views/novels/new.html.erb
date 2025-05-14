@@ -1,19 +1,78 @@
-<h1>小説を投稿する</h1>
+<!-- app/views/novels/new.html.erb -->
+<div class="container-fluid my-4">
+  <div class="row">
+    <div class="col-md-8">
+      <%= form_with model: @novel, url: novels_path, local: true, html: { id: "novel-form" } do |f| %>
+        <div class="mb-3">
+          <%= f.text_field :title, class: "form-control", placeholder: "タイトル" %>
+        </div>
 
-<%= form_with model: @novel, local: true do |f| %>
-  <div>
-    <%= f.label :title, "タイトル" %><br>
-    <%= f.text_field :title %>
+        <div class="mb-3">
+          <%= f.text_field :author_name, class: "form-control", placeholder: "著者名" %>
+        </div>
+        <div class="mb-4">
+          <%= f.text_area :body, class: "form-control", rows: 12, placeholder: "ここに本文を書いてね…" %>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+          <!-- 文章チェック（ボタンだけ。JSでYahoo API呼ぶ想定）-->
+          <button type="button" class="btn btn-info btn-lg">
+            <i class="bi bi-search me-1"></i> 文章チェック（Yahoo API）
+          </button>
+
+          <!-- プレビュー -->
+          <%= button_tag type: "submit",
+                         formaction: preview_novels_path,
+                         formmethod: "post",
+                         class: "btn btn-warning btn-lg" do %>
+            <i class="bi bi-eye-fill me-1"></i> プレビュー
+          <% end %>
+
+          <!-- 下書き保存 -->
+          <%= button_tag name: "draft",
+                         value: "true",
+                         type: "submit",
+                         class: "btn btn-outline-success btn-lg" do %>
+            <i class="bi bi-pencil-square me-1"></i> 下書き保存
+          <% end %>
+
+          <!-- 本番投稿 -->
+          <%= button_tag name: "publish",
+                         value: "true",
+                         type: "submit",
+                         class: "btn btn-primary btn-lg" do %>
+            <i class="bi bi-send-fill me-1"></i> 投稿する
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- 右カラム：サイドメニュー -->
+    <div class="col-md-4">
+     
+
+      <!-- フォント選択（メインフォームに連動）-->
+      <div class="mb-3">
+        <label class="form-label">フォント</label>
+        <select class="form-select" name="font_choice" form="novel-form">
+          <option>こぶり明朝</option>
+          <option>“游ゴシック”</option>
+          <option>MS明朝</option>
+          <option>ヒラギノ角ゴ</option>
+        </select>
+      </div>
+
+      <!-- 色選択 -->
+      <div class="mb-3 d-flex gap-2">
+        <button type="button" class="btn btn-danger flex-fill">赤色</button>
+        <button type="button" class="btn btn-info flex-fill">青色</button>
+      </div>
+
+      <!-- 文字サイズ -->
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-outline-dark flex-fill">文字大</button>
+        <button type="button" class="btn btn-outline-dark flex-fill">中</button>
+      </div>
+    </div>
   </div>
-
-  <div>
-    <%= f.label :body, "本文" %><br>
-    <%= f.text_area :body, rows: 10 %>
-  </div>
-
-  <div>
-    <%= f.submit "投稿する" %>
-  </div>
-<% end %>
-
-<%= link_to "一覧に戻る", novels_path %>
+</div>

@@ -1,5 +1,8 @@
 # app/models/user.rb
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
   has_secure_password
   before_create :generate_email_token
   has_many :novels, dependent: :destroy

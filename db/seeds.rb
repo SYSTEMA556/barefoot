@@ -23,6 +23,7 @@ users = User.all
   Novel.create!(
     title: Faker::Book.title,
     body: Faker::Lorem.paragraphs(number: 5).join("\n\n"),
+    status:      :published,
     user: users.sample
   )
 end

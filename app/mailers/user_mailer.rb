@@ -1,9 +1,10 @@
 class UserMailer < ApplicationMailer
   default from: 'your_email@gmail.com'
 
-  def welcome_email(user)
+  def email_confirmation(user)
     @user = user
-    @url  = 'http://localhost:3000/login'
-    mail(to: @user.email, subject: 'Welcome to My Awesome Site')
+    # confirm_email_users_url はルーティングに合わせて
+    @url  = confirm_email_users_url(token: @user.email_token)
+    mail(to: @user.email, subject: '【紅魔館】仮登録ありがとうございます')
   end
 end
