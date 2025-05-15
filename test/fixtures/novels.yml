@@ -1,11 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+first_novel:
+  title: "私の最初の小説"
+  body: "むかしむかし…"
+  user: alice
 
-one:
-  title: MyString
-  body: MyText
-  user: one
 
-two:
-  title: MyString
-  body: MyText
-  user: two
