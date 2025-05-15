@@ -78,4 +78,5 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-   url: <%= ENV['DATABASE_URL'] %>
+  <<: *default       # まずデフォルト設定（adapter: postgresql など）を継承
+  url: <%= ENV['DATABASE_URL'] %>  # Render が渡す接続情報を使う
