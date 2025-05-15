@@ -5,6 +5,8 @@ class User < ApplicationRecord
 
   has_secure_password
   before_create :generate_email_token
+  after_create  :send_confirmation_email
+
   has_many :novels, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
@@ -18,5 +20,9 @@ class User < ApplicationRecord
 
   def generate_email_token
     self.email_token = SecureRandom.urlsafe_base64
+  end
+
+   def send_confirmation_email
+    UserMailer.email_confirmation(self).deliver_later
   end
 end

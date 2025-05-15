@@ -1,3 +1,4 @@
-<p><%= @user.user_name %>さん、こんにちは。</p>
-<p>メール認証はこちらから：</p>
-<p><%= link_to "認証する", confirm_email_url(token: @user.email_token) %></p>
+<p>
+  メールアドレスを認証するには、下のリンクをクリックしてください。<br>
+  <%= link_to "認証する", confirm_email_users_url(token: @user.email_token) %>
+</p>

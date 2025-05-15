@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   get 'tags/index'
   get 'tags/show'
+
   root "novels#index"
     resources :novels, only: [:index, :new, :create, :show] do
     # POST /novels/preview を preview_novels_path にマッピング
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
 
    #resources :users, only: [:new, :create,:show,:index]
    #get "/confirm_email", to: "users#confirm_email"
+
 
    resources :users do
   get :confirm_email, on: :collection

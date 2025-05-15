@@ -1,7 +1,4 @@
-Welcome to My Awesome Site, <%= @user.user_name %>!
-
-You have successfully signed up to our site.
-
-To login, visit the following URL:
-
-<%= @url %>
+<p>
+  メールアドレスを認証するには、下のリンクをクリックしてください。<br>
+  <%= link_to "認証する", confirm_email_users_url(token: @user.email_token) %>
+</p>
