@@ -12,7 +12,8 @@ min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 
 rails_env = ENV.fetch("RAILS_ENV") { "development" }
-
+bind "tcp://0.0.0.0:#{ENV.fetch("PORT") { 3000 }}"
+#なぞのエラー対策２
 if rails_env == "production"
   # If you are running more than 1 thread per process, the workers count
   # should be equal to the number of processors (CPU cores) in production.
