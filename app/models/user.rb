@@ -5,7 +5,8 @@ class User < ApplicationRecord
 
   has_secure_password
   before_create :generate_email_token
-  after_create  :send_confirmation_email
+  #after_create  :send_confirmation_email 
+  #(コントローラー側で送る処理してるので消す)
 
   has_many :novels, dependent: :destroy
 
@@ -22,7 +23,7 @@ class User < ApplicationRecord
     self.email_token = SecureRandom.urlsafe_base64
   end
 
-   def send_confirmation_email
-    UserMailer.email_confirmation(self).deliver_later
-  end
+   # def send_confirmation_email
+   #  UserMailer.email_confirmation(self).deliver_later
+ #  end
 end

@@ -45,11 +45,12 @@
         <i class="bi bi-person-circle"></i> マイページ
       <% end %>
     </li>
-    <li class="nav-item">
-      <%= link_to logout_path, method: :delete, class: "nav-link" do %>
-        <i class="bi bi-box-arrow-right"></i> ログアウト
-      <% end %>
-    </li>
+  <%= button_to logout_path,
+                method: :delete,
+                form: { class: "d-inline" },    # inline 表示にする
+                class: "nav-link btn btn-link p-0" do %>
+    <i class="bi bi-box-arrow-right"></i> ログアウト
+  <% end %>
   <% else %>
     <!-- 未ログイン -->
     <li class="nav-item">
@@ -64,7 +65,7 @@
     </li>
   <% end %>
           <li class="nav-item">
-            <form class="d-flex" action="/search" method="get">
+            <form class="d-flex" action="#" method="get">
               <input
                 class="form-control form-control-sm me-2"
                 type="search"
