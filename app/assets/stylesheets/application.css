@@ -5,10 +5,10 @@ main > .mx-auto {
     "Noto Serif JP", "BIZ UD明朝 Medium",
     "YuMincho", "Hiragino Mincho ProN", "serif";
 }
-@media (max-width: 767px) {
-  .novel-card {
-    flex-basis: 100% !important;
-    max-width: 100% !important;
+@media (max-width: 576px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
@@ -16,4 +16,9 @@ main > .mx-auto {
   font-size: 0.95rem;
   padding-top: 0.6rem;
   padding-bottom: 0.6rem;
+}
+@media (max-width: 576px) {
+  body {
+    font-size: 1.1rem; /* スマホでは17.6px */
+  }
 }
