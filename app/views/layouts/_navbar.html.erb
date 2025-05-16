@@ -1,83 +1,60 @@
- <!-- 🌹 ヘッダー：拡張可能なナビバー -->
-  <nav class="navbar navbar-expand-lg navbar-dark  shadow-sm" style="background-color: #123458;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">Novel site name</a>
-      <!-- モバイル用トグルボタン -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navMenu"
-        aria-controls="navMenu"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #123458;">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="/">Novel site name</a>
 
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+    <!-- ハンバーガーメニュー -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto text-center gap-2 px-2">
+        <%# ナビリンクたち %>
         <li class="nav-item">
-          <%= link_to new_novel_path, class: "nav-link" do %>
-            <i class="bi bi-journal-plus"></i> 新規投稿
+          <%= link_to new_novel_path, class: "nav-link py-2 px-3" do %>
+            <i class="bi bi-journal-plus me-1"></i> 新規投稿
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to "#", class: "nav-link" do %>
-            <i class="bi bi-bookmark-fill"></i> ブックマーク
+          <%= link_to "#", class: "nav-link py-2 px-3" do %>
+            <i class="bi bi-bookmark-fill me-1"></i> ブックマーク
           <% end %>
         </li>
-          <!-- ドロップダウン -->
-          
-  <!--  <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-       role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="bi bi-list"></i> マイメニュー
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-      <li><a class="dropdown-item" href="/about">このサイトについて</a></li>
-      <li><a class="dropdown-item" href="/contact">お問い合わせ</a></li>
-    </ul>
-  </li> -->
-  <% if current_user %>
-    <!-- ログイン中 -->
-    <li class="nav-item">
-      <%= link_to user_path(current_user), class: "nav-link" do %>
-        <i class="bi bi-person-circle"></i> マイページ
-      <% end %>
-    </li>
-  <%= button_to logout_path,
-                method: :delete,
-                form: { class: "d-inline" },    # inline 表示にする
-                class: "nav-link btn btn-link p-0" do %>
-    <i class="bi bi-box-arrow-right"></i> ログアウト
-  <% end %>
-  <% else %>
-    <!-- 未ログイン -->
-    <li class="nav-item">
-      <%= link_to new_user_path, class: "nav-link" do %>
-        <i class="bi bi-person-plus"></i> ユーザー登録
-      <% end %>
-    </li>
-    <li class="nav-item">
-      <%= link_to login_path, class: "nav-link" do %>
-        <i class="bi bi-box-arrow-in-right"></i> ログイン
-      <% end %>
-    </li>
-  <% end %>
+
+        <% if current_user %>
           <li class="nav-item">
-            <form class="d-flex" action="#" method="get">
-              <input
-                class="form-control form-control-sm me-2"
-                type="search"
-                name="q"
-                placeholder="検索…"
-                aria-label="Search">
-              <button class="btn btn-sm btn-light" type="submit">
-                <i class="bi bi-search"></i>
-              </button>
-            </form>
+            <%= link_to user_path(current_user), class: "nav-link py-2 px-3" do %>
+              <i class="bi bi-person-circle me-1"></i> マイページ
+            <% end %>
           </li>
-        </ul>
-      </div>
+          <li class="nav-item">
+            <%= button_to logout_path,
+                          method: :delete,
+                          form: { class: "d-inline" },
+                          class: "btn btn-sm btn-outline-light mt-1 px-3" do %>
+              <i class="bi bi-box-arrow-right me-1"></i> ログアウト
+            <% end %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to new_user_path, class: "nav-link py-2 px-3" do %>
+              <i class="bi bi-person-plus me-1"></i> 登録
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to login_path, class: "nav-link py-2 px-3" do %>
+              <i class="bi bi-box-arrow-in-right me-1"></i> ログイン
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
