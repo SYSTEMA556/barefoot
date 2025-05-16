@@ -1,0 +1,5 @@
+ja:
+  time:
+    formats:
+      short: "%m/%d %H:%M"
+      custom_ja: "%Y年%m月%d日 %H:%M"

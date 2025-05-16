@@ -1,24 +1,24 @@
-# README
+オリジナルアプリのMVP(β版)レビュー依頼を行ってください。
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+デプロイ済みアプリの公開リンクとGitHubのリンクを提出してください。
+レビューの効率化のためissueは以下issue用のテンプレートを参考に作成してください。
 
-Things you may want to cover:
 
-* Ruby version
+## 各種情報
+サービスの概要とMVPで検証する事柄：ログイン、投稿機能、新規ユーザー登録、読む機能
+サービス名：barefoot
+サービスURL：https://barefoot-b2x6.onrender.com
 
-* System dependencies
 
-* Configuration
+## READMEレビュー時にMVPリリース時点で実装予定だった機能
+- [×] ログイン・ログアウト
+- [×] ユーザー登録
+- [×] 小説投稿画面
+- [×] 小説閲覧画面
+READMEレビュー時に実装予定だった機能が実装できているかがわかるように記載してください。
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## READMEレビュー時から変更した機能
+開発途中でMVPリリース時点で作らなくなった機能や追加した機能があれば記載してください。なければこの項目は省略してください。
+小説編集機能を除去。
+## サービスイメージがわかるようなスクリーンショット等
+特に管理画面など通常ユーザーが触れない機能があったら共有してください。

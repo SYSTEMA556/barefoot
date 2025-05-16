@@ -1,100 +1,111 @@
-<!-- app/views/novels/index.html.erb -->
-<section class="mb-5">
-  <h2 class="h4">おしらせ：フェスティバル会場はこちら</h2>
-  <div class="alert alert-info d-flex justify-content-between align-items-start">
-    <div>
-      <i class="bi bi-info-circle-fill me-2"></i>
-      <strong>まつり１</strong><br>
-      <small class="text-muted">こんなまつりです</small>
-    </div>
-    <!-- 将来フェスティバルコントローラを作ったらパスを変更 -->
-    <a href="#" class="btn btn-sm btn-primary align-self-end">みにいく</a>
-  </div>
-</section>
+<div class="d-flex flex-column flex-sm-row">
 
-<section class="mb-5">
-  <h2 class="h4"><i class="bi bi-activity me-1"></i>注目のタグ</h2>
-  <div class="d-flex flex-wrap gap-2">
-    <% ["恋愛","SF","冒険","ホラー","ファンタジー"].each do |tag_name| %>
-      <!-- 後で tag_path(tag) に差し替え -->
-      <a href="#" class="badge bg-secondary text-light">✔️ <%= tag_name %></a>
-    <% end %>
-  </div>
-</section>
-
-<section class="mb-5">
-  <!-- 大きな注目カード（今は静的プレースホルダ） -->
-  <div class="card mb-4 shadow-sm">
-    <div class="card-body d-flex justify-content-between align-items-center">
-      <div>
-        <h3 class="card-title">作品タイトル</h3>
-        <p class="card-subtitle text-muted mb-2">作者名</p>
-        <span class="badge bg-info text-dark me-1">Label</span>
-        <span class="badge bg-info text-dark">Label</span>
+<div class="container my-5" style="max-width: 1100px;">
+  <!-- 🏮 フェスティバル告知 -->
+  <section class="mb-5">
+    <h2 class="fs-5 fw-bold mb-3">🎉 おしらせ：フェスティバル会場はこちら</h2>
+    <div class="alert alert-info d-flex justify-content-between align-items-start flex-column flex-sm-row">
+      <div class="mb-2 mb-sm-0">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        <strong>まつり１</strong><br>
+        <small class="text-muted">こんなまつりです</small>
       </div>
-      <div><small>コメント：8</small></div>
+      <a href="#" class="btn btn-sm btn-primary align-self-sm-end">みにいく</a>
     </div>
-  </div>
+  </section>
 
-  <!-- 作品一覧グリッド -->
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-    <% @novels.each do |novel| %>
-      <div class="col">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body d-flex flex-column">
-            <!-- タイトルとリンク -->
-            <h5 class="card-title mb-1">
-             <%= link_to novel_path(novel), class: "text-decoration-none text-dark" do %>
-             <i class="bi bi-music-note me-1"></i><%= novel.title %>
-             <% end %>
-            </h5>
-            <!-- 作者名 -->
-         <h6 class="card-subtitle mb-2 text-muted">
-           <% if novel.user.present? %>
-          <!-- ログインユーザーの作品なら user_nameでリンク -->
-            <%= link_to novel.user.user_name,
-                user_path(novel.user),
-                class: "text-decoration-none" %>
-            <% elsif novel.author_name.present? %>
-              <!-- ゲスト投稿（author_nameがあればそれを表示） -->
-              <%= novel.author_name %>
-            <% else %>
-              作者不明
-            <% end %>
-          </h6>
-          
-            <!-- ステータスバッジ -->
-            <% if novel.respond_to?(:status) && novel.draft? %>
-              <span class="badge bg-secondary mb-2">下書き</span>
-            <% end %>
-            <!-- 本文抜粋 -->
-            <p class="card-text flex-grow-1"><%= truncate(novel.body, length: 100) %></p>
-            <!-- 投稿日 -->
-            <small class="text-muted">投稿日：<%= novel.created_at.strftime("%Y/%m/%d") %></small>
-            <!-- タグ -->
-            <div class="mt-2">
-              <% if novel.respond_to?(:tags) %>
-                <% novel.tags.each do |tag| %>
-                  <span class="badge bg-secondary me-1">✔️ <%= tag.name %></span>
+  <!-- 🏷 注目タグ -->
+  <section class="mb-5">
+    <h2 class="fs-5 fw-bold mb-3"><i class="bi bi-tags me-1"></i>注目のタグ</h2>
+    <div class="d-flex flex-wrap gap-2">
+      <% ["恋愛","SF","冒険","ホラー","ファンタジー"].each do |tag_name| %>
+        <a href="#" class="badge bg-secondary text-light fs-6 px-3 py-2 text-decoration-none">✔️ <%= tag_name %></a>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- 📘 注目作品 -->
+  <section class="mb-5">
+    <div class="card mb-4 shadow-sm border-0">
+      <div class="card-body d-flex flex-column flex-md-row justify-content-between">
+        <div>
+          <h3 class="card-title fs-5 mb-1">作品タイトル</h3>
+          <p class="card-subtitle text-muted mb-2">作者名</p>
+          <span class="badge bg-info text-dark me-1">幻想</span>
+          <span class="badge bg-info text-dark">バトル</span>
+        </div>
+        <div class="text-muted mt-3 mt-md-0"><small>💬 コメント：8</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📚 作品カード一覧 -->
+  <section>
+    <div class="row row-cols-1  row-cols-md-2 g-4">
+      <% @novels.each do |novel| %>
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0 bg-light">
+            <div class="card-body d-flex flex-column p-3">
+              <!-- タイトル -->
+              <h5 class="card-title mb-2 fs-6">
+                <%= link_to novel_path(novel), class: "text-decoration-none text-primary fw-semibold" do %>
+                  <i class="bi bi-music-note me-1"></i><%= truncate(novel.title, length: 28) %>
                 <% end %>
+              </h5>
+
+              <!-- 作者 -->
+              <div class="card-subtitle mb-2 text-muted small">
+                <% if novel.user %>
+                  <span class="badge bg-primary me-1">会員</span>
+                  <%= link_to novel.user.user_name, user_path(novel.user), class: "text-muted text-decoration-none" %>
+                <% elsif novel.author_name.present? %>
+                  <span class="badge bg-secondary me-1">ゲスト</span>
+                  <%= h(novel.author_name) %>
+                <% else %>
+                  <em class="text-muted">作者不明</em>
+                <% end %>
+              </div>
+
+              <!-- ステータス -->
+              <% if novel.respond_to?(:status) && novel.draft? %>
+                <span class="badge bg-secondary mb-2">下書き</span>
               <% end %>
+
+              <!-- 抜粋 -->
+              <p class="card-text small text-body flex-grow-1 lh-sm"><%= truncate(novel.body, length: 100) %></p>
+
+              <!-- タグ -->
+              <div class="mt-2 text-wrap">
+                <% if novel.respond_to?(:tags) %>
+                  <% novel.tags.each do |tag| %>
+                    <span class="badge bg-secondary me-1 mb-1">✔️ <%= tag.name %></span>
+                  <% end %>
+                <% end %>
+              </div>
+
+              <!-- 投稿日＋コメント -->
+              <div class="mt-3 d-flex justify-content-between align-items-end small text-muted">
+                <div>
+                  <%= novel.published? ? "投稿日：" + l(novel.created_at, format: :short) : "更新日：" + l(novel.updated_at, format: :short) %>
+                </div>
+                <div>
+                  💬 <%= novel.respond_to?(:comments_count) ? novel.comments_count : (novel.comments.size rescue 0) %>
+                </div>
+              </div>
             </div>
-            <!-- コメント数 -->
-            <p class="card-text mt-auto"><small class="text-muted">
-              コメント：<%= novel.respond_to?(:comments_count) ? novel.comments_count : (novel.comments.size rescue 0) %>
-            </small></p>
           </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
 
-  <!-- ページネーション -->
-  <% if defined?(paginate) %>
-    <nav aria-label="Page navigation" class="mt-4">
-      <ul class="pagination justify-content-center">
-        <%= paginate @novels, theme: 'bootstrap-5' %>
-      </ul>
-    </nav>
-  <% end %>
-</section>
+    <!-- ページネーション -->
+    <% if defined?(paginate) %>
+      <nav aria-label="ページネーション" class="mt-4">
+        <div class="d-flex justify-content-center">
+          <%= paginate @novels, theme: 'bootstrap-5' %>
+        </div>
+      </nav>
+    <% end %>
+  </section>
+</div>
+</div>

@@ -1,37 +1,57 @@
 <!-- app/views/novels/_novel_cards.html.erb -->
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 g-4">
   <% novels.each do |novel| %>
     <div class="col">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title mb-1">
-            <%= link_to novel_path(novel), class: "text-decoration-none text-dark" do %>
-              <i class="bi bi-book"></i> <%= novel.title %>
+  <div class="card h-100 shadow-sm border-0 bg-light">
+    <div class="row g-0">
+      <!-- 左：メタ情報 or イメージ（アイコンやタグ） -->
+      <div class="col-3 d-flex flex-column justify-content-center align-items-center p-2 text-center bg-light border-end">
+        <div class="mb-2">
+          <i class="bi bi-book fs-2 text-secondary"></i>
+        </div>
+        <small class="text-muted">💬 <%= novel.comments_count || 0 %></small>
+      </div>
+
+      <!-- 右：本文エリア -->
+      <div class="col-9">
+        <div class="card-body py-3 px-3 d-flex flex-column h-100">
+          <h5 class="card-title fs-6 mb-1">
+            <%= link_to novel_path(novel), class: "text-decoration-none text-primary fw-semibold" do %>
+              <%= truncate(novel.title, length: 28) %>
             <% end %>
           </h5>
-          <h6 class="card-subtitle mb-2 text-muted">
+
+          <p class="card-subtitle text-muted small mb-2">
             <% if novel.user %>
-              <span class="badge bg-primary">会員</span>
-              <%= link_to novel.user.user_name, user_path(novel.user) %>
+              <span class="badge bg-primary me-1">会員</span>
+              <%= link_to novel.user.user_name, user_path(novel.user), class: "text-muted text-decoration-none" %>
             <% elsif novel.author_name.present? %>
-              <span class="badge bg-secondary">ゲスト</span>
-              <%= novel.author_name %>
+              <span class="badge bg-secondary me-1">ゲスト</span>
+              <%= h(novel.author_name) %>
             <% else %>
-              作者不明
+              <em class="text-muted">作者不明</em>
             <% end %>
-          </h6>
-          <p class="card-text flex-grow-1"><%= truncate(novel.body, length: 100) %></p>
-          <small class="text-muted">
-            <%= novel.published? ? "投稿日：" + novel.created_at.strftime("%Y/%m/%d") : "更新日：" + novel.updated_at.strftime("%Y/%m/%d") %>
-          </small>
-          <p class="card-text mt-auto">
-            <small class="text-muted">
-              コメント：<%= novel.comments.size %>
-            </small>
           </p>
+
+          <p class="card-text small lh-sm mb-2">
+            <%= truncate(novel.body, length: 100) %>
+          </p>
+
+          <div class="mt-auto text-muted small d-flex justify-content-between">
+            <div>
+              <%= novel.published? ? "📅 " + l(novel.created_at, format: :custom_ja) : "更新：" + l(novel.updated_at, format: :custom_ja) %>
+            </div>
+            <div>
+              <% novel.tags.each do |tag| %>
+                <span class="badge bg-secondary me-1">#<%= tag.name %></span>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
   <% end %>
 </div>
 
