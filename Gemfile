@@ -61,6 +61,10 @@ group :development do
   # gem "rack-mini-profiler"
   gem "letter_opener", "~> 1.10"
   gem "letter_opener_web"
+  gem 'rails-i18n', '~> 7.0' 
+  #メッセージ表示
+  # Gemfile
+  gem 'devise-i18n'  # Devise のビルトインメッセージを多言語化:contentReference[oaicite:4]{index=4}
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"

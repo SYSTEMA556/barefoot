@@ -1,5 +1,17 @@
 <h1>ユーザー登録</h1>
 
+
+<% if @user.errors.any? %>
+  <div class="errors">
+    <h2><%= pluralize(@user.errors.count, "件") %> エラーがあります</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<!--↑エラーメッセージ文章-->
 <%= form_with model: @user, url: users_path do |f| %>
   <div>
     <%= f.label :user_name, "ユーザー名" %><br>

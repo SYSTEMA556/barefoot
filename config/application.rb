@@ -23,7 +23,8 @@ module NovelMvp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-     
+   config.i18n.default_locale = :ja   # 日本語を使う設定:contentReference[oaicite:0]{index=0}
+    config.i18n.available_locales = [:ja, :en]
 
   end
 end

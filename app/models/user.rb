@@ -5,14 +5,17 @@ class User < ApplicationRecord
 
   has_secure_password
   before_create :generate_email_token
-  #after_create  :send_confirmation_email 
-  #(コントローラー側で送る処理してるので消す)
+
 
   has_many :novels, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
+
   validates :user_name, presence: true
 
+  validates :password,  length: { minimum: 6 }, if: -> { new_record? || !password.nil? }
+   #パスワードは6文字以上でしましょうか
+   
   def confirm_email!
     update(email_confirmed: true, email_token: nil)
   end
