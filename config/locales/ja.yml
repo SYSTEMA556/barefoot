@@ -1,27 +1,29 @@
 ja:
-  time:
-    formats:
-      short: "%m/%d %H:%M"
-      custom_ja: "%Y年%m月%d日 %H:%M"
   activerecord:
     errors:
-      models:
-        user:
-          attributes:
-            user_name:
-              blank: "ユーザー名を入力してください"
-            email:
-              blank: "メールアドレスを入力してください"
-              invalid: "メールアドレスの形式が不正です"
-            password:
-              blank: "パスワードを入力してください"
-              too_short: "パスワードは%{count}文字以上で入力してください"
+      messages:
+        blank:          "を入力してください"
+        record_invalid: "バリデーションに失敗しました: %{errors}"
+    models:
+      user:  "ユーザー"
+      novel: "小説"
+    attributes:
+      novel:
+        title:       "タイトル"
+        author_name: "著者名"
+        body:        "本文"
+
+  time:
+    formats:
+      short:     "%m/%d %H:%M"
+      custom_ja: "%Y年%m月%d日 %H:%M"
+
   devise:
     passwords:
       no_token: "トークンが不正です"
     sessions:
       signed_in: "ログインしました"
-      invalid: "メールアドレスまたはパスワードが違います"
+      invalid:   "メールアドレスまたはパスワードが違います"
     registrations:
       signed_up: "アカウント登録が完了しました"
-      invalid: "入力内容に問題があります"
+      invalid:   "入力内容に問題があります"
