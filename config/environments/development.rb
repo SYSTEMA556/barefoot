@@ -35,24 +35,32 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
-  #今日
-config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = {
-  address: 'smtp.gmail.com',
-  port: 587,
-  domain: 'example.com',
-  user_name: 'your_email@gmail.com',
-  password: 'your_app_password',
-  authentication: 'plain',
-  enable_starttls_auto: true
-}
-  config.action_mailer.delivery_method = :letter_opener
-config.action_mailer.delivery_method = :letter_opener_web
-config.action_mailer.perform_deliveries = true
+  if Rails.env.development?
+  config.action_mailer.delivery_method       = :letter_opener_web
+  config.action_mailer.perform_deliveries    = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options   = { host: 'localhost', port: 3000 }
+end
+  # 本番環境ではGmail SMTPを使って実際に送信
+ if Rails.env.production?
+  config.action_mailer.delivery_method       = :smtp
+  config.action_mailer.perform_deliveries    = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options   = { host: 'your-production-domain.com', protocol: 'https' }
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.gmail.com',
+    port:                 587,
+    domain:               'your-production-domain.com',
+    user_name:            Rails.application.credentials.dig(:smtp, :user_name),
+    password:             Rails.application.credentials.dig(:smtp, :password),
+    authentication:       'plain',
+    enable_starttls_auto: true
+  }
+end
 
-config.action_mailer.default_url_options = { 
-  host: 'localhost', 
-  port: 3000 
+  config.action_mailer.default_url_options = {
+    host: 'localhost',
+    port: 3000
   }
 
 

@@ -78,5 +78,9 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default       # まずデフォルト設定（adapter: postgresql など）を継承
-  url: <%= ENV['DATABASE_URL'] %>  # Render が渡す接続情報を使う
+  <<: *default
+  database: novel_mvp_production
+  username: your_pg_user
+  password: <%= ENV['PG_PASSWORD'] %>
+  host:     localhost   # or your DB host
+  port:     5432
