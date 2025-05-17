@@ -1,29 +1,24 @@
 ja:
+  time:
+    formats:
+      short:     "%m/%d %H:%M"
+      custom_ja: "%Y年%m月%d日 %H:%M"
+
   activerecord:
     models:
-      user: "ユーザー"
-      novel: "小説"            # ← ここに移動
-    errors:
-      models:
-        user:
-          attributes:
-            user_name:
-              blank: "ユーザー名を入力してください"
-            email:
-              blank:   "メールアドレスを入力してください"
-              invalid: "メールアドレスの形式が不正です"
-            password:
-              blank:    "パスワードを入力してください"
-              too_short: "パスワードは%{count}文字以上で入力してください"
+      user:  "ユーザー"
+      novel: "小説"
     attributes:
       novel:
         title:       "タイトル"
         author_name: "著者名"
         body:        "本文"
+
   errors:
     messages:
       blank:  "を入力してください"
     format: "%{attribute}%{message}"
+
   devise:
     passwords:
       no_token: "トークンが不正です"
@@ -33,7 +28,3 @@ ja:
     registrations:
       signed_up: "アカウント登録が完了しました"
       invalid:   "入力内容に問題があります"
-  time:
-    formats:
-      short:     "%m/%d %H:%M"
-      custom_ja: "%Y年%m月%d日 %H:%M"
