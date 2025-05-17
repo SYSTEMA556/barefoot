@@ -21,11 +21,13 @@ Novel.destroy_all
 users = User.all
 100.times do
   Novel.create!(
-    title: Faker::Book.title,
-    body: Faker::Lorem.paragraphs(number: 5).join("\n\n"),
+    title:       Faker::Book.title,
+    author_name: Faker::Book.author,            # ← ここを追加！
+    body:        Faker::Lorem.paragraphs(number: 5).join("\n\n"),
     status:      :published,
-    user: users.sample
+    user:        users.sample
   )
 end
+
 
 puts "Seeding completed."
