@@ -7,13 +7,15 @@ puts "Seeding data..."
 # ユーザーの作成
 User.destroy_all
 25.times do
-  User.create!(
-    user_name: Faker::Name.unique.name,
-    email: Faker::Internet.unique.email,
-    password: 'password',
-    password_confirmation: 'password',
-    confirmed_at: Time.current
-  )
+User.create!(
+  user_name:  Faker::Name.unique.name,
+  email:      Faker::Internet.unique.email,
+  password:   'password',
+  password_confirmation: 'password',
+  activated:  true,                # ← モック用に即時有効化でも可
+  activated_at: Time.current
+)
+
 end
 
 # 小説の作成
