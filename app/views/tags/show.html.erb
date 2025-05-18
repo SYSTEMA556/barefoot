@@ -1,7 +1,17 @@
-<h2 class="h4 mb-3">「<%= @tag.name %>」の作品一覧</h2>
-<div class="row row-cols-1 row-cols-sm-2...">
+<section class="mb-5">
+  <h2 class="h4">タグ「<%= params[:id] %>」の作品一覧</h2>
+
+<div class="row row-cols-1 row-cols-lg-2 g-4">
   <% @novels.each do |novel| %>
-    <!-- 先ほどのカードをここに再利用 -->
+    <%= render partial: "novels/novel_card", locals: { novel: novel } %>
   <% end %>
 </div>
-<%= paginate @novels, theme: 'bootstrap-5', class: 'mt-4 d-flex justify-content-center' %>
+
+  <% if defined?(paginate) %>
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <%= paginate @novels, theme: 'bootstrap-5' %>
+      </ul>
+    </nav>
+  <% end %>
+</section>

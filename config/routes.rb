@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-
+  get 'password_resets/new'
+  get 'password_resets/edit'
   get 'tags/index'
   get 'tags/show'
+  resources :tags, only: [:index, :show]
 
   root "novels#index"
     resources :novels, only: [:index, :new, :create, :show] do
@@ -22,7 +24,9 @@ Rails.application.routes.draw do
 
    #resources :users, only: [:new, :create,:show,:index]
    #get "/confirm_email", to: "users#confirm_email"
-
+   
+   #パスワードリセットの時の動き
+  resources :password_resets, only: [:new, :create, :edit, :update]
 
    resources :users do
   get :confirm_email, on: :collection

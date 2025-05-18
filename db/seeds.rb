@@ -28,6 +28,4 @@ users = User.all
     user:        users.sample
   )
 end
-
-
 puts "Seeding completed."

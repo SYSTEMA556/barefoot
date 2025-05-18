@@ -72,15 +72,15 @@
                 <span class="badge bg-secondary mb-2">下書き</span>
               <% end %>
 
-              <!-- 抜粋 -->
+           
               <p class="card-text small text-body flex-grow-1 lh-sm"><%= truncate(novel.body, length: 100) %></p>
 
               <!-- タグ -->
               <div class="mt-2 text-wrap">
                 <% if novel.respond_to?(:tags) %>
-                  <% novel.tags.each do |tag| %>
-                    <span class="badge bg-secondary me-1 mb-1">✔️ <%= tag.name %></span>
-                  <% end %>
+    <% novel.tag_list.each do |tag| %>
+      <%= link_to tag, tag_path(tag), class: "badge bg-secondary me-1" %>
+    <% end %>
                 <% end %>
               </div>
 

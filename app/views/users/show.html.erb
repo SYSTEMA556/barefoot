@@ -4,17 +4,11 @@
  <!-- <p>Email: <%= @user.email %></p>  危ないが過ぎる-->
 
   <h3 class="h5 mt-4">投稿作品一覧</h3>
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-    <% @novels.each do |novel| %>
-      <div class="col">
-        <%= link_to novel_path(novel), class: "card h-100 text-decoration-none text-dark" do %>
-          <div class="card-body">
-            <h5 class="card-title"><%= novel.title %></h5>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+  <div class="row row-cols-1 row-cols-lg-2 g-4">
+  <% @novels.each do |novel| %>
+    <%= render partial: "novels/novel_card", locals: { novel: novel } %>
+  <% end %>
+</div>
 
   <% if defined?(paginate) %>
     <nav aria-label="Page navigation" class="mt-4">

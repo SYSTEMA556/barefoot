@@ -16,7 +16,11 @@
         <div class="mb-4">
           <%= f.text_area :body, class: "form-control", rows: 12, placeholder: "ここに本文を書いてね…" %>
         </div>
-
+        <div class="mb-3">
+          <%= f.label :tag_list, "タグ（スペース区切り）" %>
+          <%= f.text_field :tag_list, class: "form-control", placeholder: "例：ファンタジー 恋愛 SF" %>
+        </div>
+        <!-- 文章チェック（ボタンだけ。JSでYahoo API呼ぶ想定）-->
         <div class="d-flex justify-content-center gap-3">
           <!-- 文章チェック（ボタンだけ。JSでYahoo API呼ぶ想定）-->
           <button type="button" class="btn btn-info btn-lg">

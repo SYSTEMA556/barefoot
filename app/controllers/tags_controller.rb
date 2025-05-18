@@ -1,11 +1,11 @@
 # app/controllers/tags_controller.rb
 class TagsController < ApplicationController
   def index
-    @tags = Tag.all.order(:name)
+    @tags = ActsAsTaggableOn::Tag.most_used(50)
   end
 
   def show
-    @tag    = Tag.find(params[:id])
-    @novels = @tag.novels.order(created_at: :desc).page(params[:page])
+    @tag = params[:id]
+    @novels = Novel.published.tagged_with(@tag).page(params[:page]).per(20)
   end
 end
