@@ -1,31 +1,31 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
-  get 'password_resets/edit'
-  get 'tags/index'
-  get 'tags/show'
+
+
   resources :tags, only: [:index, :show]
 
   root "novels#index"
     resources :novels, only: [:index, :new, :create, :show] do
     # POST /novels/preview を preview_novels_path にマッピング
     collection do
-      post :preview #これなんだったっけ。。。
+      post :preview #← プレビュー用エンドポイント
       get :my_posts    # 会員本人の公開投稿一覧
       get :drafts      # 会員本人の下書き一覧
     end
   end
+  #セッション周り
    resources :sessions, only: [:new, :create]
+   
    get "/session", to: "sessions#show", as: :session
-
-
-  get "/signup", to: "users#new", as: :signup
+   get "/signup", to: "users#new", as: :signup
    delete "/logout", to: "sessions#destroy"
+   
+   
    get "/login", to: "sessions#new"
 
    #resources :users, only: [:new, :create,:show,:index]
    #get "/confirm_email", to: "users#confirm_email"
    
-   #パスワードリセットの時の動き
+   
   resources :password_resets, only: [:new, :create, :edit, :update]
 
    resources :users do
