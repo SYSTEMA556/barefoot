@@ -6,5 +6,7 @@ class Novel < ApplicationRecord
   validates :body, presence: true
   has_many :novel_tags, dependent: :destroy
   has_many :tags, through: :novel_tags
+  has_many :comments, dependent: :destroy
   acts_as_taggable_on :tags 
+  
 end

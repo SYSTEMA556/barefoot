@@ -1,0 +1,24 @@
+<!-- app/views/comments/_form.html.erb -->
+<%= form_with(model: [novel, comment], local: true, html: { class: "mt-4" }) do |f| %>
+  <div class="mb-3">
+    <%= f.label :body, "コメント", class: "form-label fw-bold" %>
+    <%= f.text_area :body, rows: 4, placeholder: "コメントをどうぞ…", class: "form-control", maxlength: 500 %>
+    <div class="form-text">最大500文字まで入力できます。</div>
+  </div>
+
+  <% unless current_user %>
+    <div class="mb-3">
+      <%= f.label :guest_password, "コメント用パスワード", class: "form-label fw-bold" %>
+      <%= f.password_field :guest_password, class: "form-control", placeholder: "6文字以上…" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :guest_password_confirmation, "パスワード確認", class: "form-label fw-bold" %>
+      <%= f.password_field :guest_password_confirmation, class: "form-control", placeholder: "再入力してください" %>
+    </div>
+  <% end %>
+
+  <div class="d-flex justify-content-end">
+    <%= f.submit "投稿する", class: "btn btn-primary me-2" %>
+    <%= link_to "キャンセル", novel_path(novel), class: "btn btn-secondary" %>
+  </div>
+<% end %>

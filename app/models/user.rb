@@ -10,7 +10,8 @@ class User < ApplicationRecord
 
   #==========  関連  ===========================================================
   has_many :novels, dependent: :destroy
-
+  has_many :novels , dependent: :destroy
+  has_many :comments, dependent: :destroy
   #==========  バリデーション  =================================================
   validates :email,     presence: true, uniqueness: true
   validates :user_name, presence: true
@@ -19,7 +20,7 @@ class User < ApplicationRecord
 
   #==========  認証  ===========================================================
   has_secure_password
-
+ 
   #==========  クラスメソッド  =================================================
   # URL セーフなランダムトークンを返す
   def self.new_token
@@ -33,7 +34,7 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
 
-  #==========  インスタンスメソッド  ==========================================
+  #====== インスタンスメソッド  =========
   ## メール確認
   def confirm_email!
     update(email_confirmed: true, email_token: nil)

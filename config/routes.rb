@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :novels do
+    resources :comments, only:[:create, :destroy]
+  end
 
   resources :tags, only: [:index, :show]
 
@@ -13,6 +16,7 @@ Rails.application.routes.draw do
     end
   end
   #セッション周り
+  
    resources :sessions, only: [:new, :create]
    
    get "/session", to: "sessions#show", as: :session
@@ -24,8 +28,6 @@ Rails.application.routes.draw do
 
    #resources :users, only: [:new, :create,:show,:index]
    #get "/confirm_email", to: "users#confirm_email"
-   
-   
   resources :password_resets, only: [:new, :create, :edit, :update]
 
    resources :users do

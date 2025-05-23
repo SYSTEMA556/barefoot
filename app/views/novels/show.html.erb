@@ -9,8 +9,33 @@
     <%= @novel.author_name %>
   <% end %>
 </p>
+<div class="bookmark-btn mb-3">
+  <% if current_user %>
+    <%= link_to '🔖 ブックマーク', bookmark_novel_path(@novel),
+                method: :post,
+                class: 'btn btn-outline-primary' %>
+  <% else %>
+    <button class="btn btn-outline-secondary" disabled title="ログインが必要です">
+      🔖 ブックマーク
+    </button>
+  <% end %>
+</div>
+
+
 <div>
   <%= simple_format(@novel.body) %>
 </div>
+
+
+
+<!-- コメント一覧 -->
+<h3>コメント</h3>
+<div id="comments">
+  <%= render @novel.comments %>
+</div>
+
+<!-- コメント投稿フォーム -->
+<%= render partial: 'comments/form',
+             locals: { novel: @novel, comment: @novel.comments.build } %>
 
 <%= link_to "一覧に戻る", novels_path %>
