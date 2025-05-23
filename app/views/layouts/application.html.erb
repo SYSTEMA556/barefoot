@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-bs-theme="<%= cookies[:bs_theme] || 'light' %>">
 <head>
   <meta charset="UTF-8">
   <title>Novel site name</title>
@@ -17,23 +17,26 @@
   <%= javascript_importmap_tags %>
 </head>
 
-<body class="d-flex flex-column min-vh-100 bg-white">
+
+ <body class="d-flex flex-column min-vh-100 bg-body">
 
   <!-- ナビゲーション -->
   <%= render "layouts/navbar" %>
+  
+  <div class="container-fluid mt-3">
+    <% flash.each do |type, msg| %>
+      <div class="alert alert-<%= type == :notice ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+        <%= msg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+  </div>
 
   <!-- メインコンテンツ -->
   <main class="flex-fill container-fluid py-4">
-    <div class="mx-auto px-3" style="max-width: 830px;">
-                               <!--↑これが一行あたり４０文字っぽい -->
+ <main class="flex-fill container-fluid py-4 bg-body">
+    <div class="mx-auto px-3 content-body">
       <%= yield %>
-
-      <!-- 📨 フラッシュメッセージ -->
-      <% flash.each do |key, msg| %>
-        <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> mt-3">
-          <%= msg %>
-        </div>
-      <% end %>
     </div>
   </main>
 

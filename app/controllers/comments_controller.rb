@@ -13,16 +13,15 @@ class CommentsController < ApplicationController
     end
   end
 
-  def destroy
-    @comment = @novel.comments.find(params[:id])
-    if @comment.user == current_user
-      @comment.destroy
-      redirect_to novel_path(@novel), notice: 'コメントを削除したわ♡'
-    else
-      redirect_to novel_path(@novel), alert: '他人のコメントは消せないのよ！'
-    end
+def destroy
+  comment = Comment.find(params[:id])
+  unless comment.user == current_user || current_user&.admin?
+    redirect_back fallback_location: root_path, alert: "権限がありませんわ"
+    return
   end
-
+  comment.destroy
+  redirect_back fallback_location: root_path, notice: "コメントを削除いたしました"
+end
   private
 
  def set_novel

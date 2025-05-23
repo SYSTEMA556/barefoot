@@ -1,53 +1,46 @@
 <!-- app/views/novels/_novel_card.html.erb -->
 <div class="col">
-  <div class="card h-100 shadow-sm border-0 bg-light">
-    <div class="card-body d-flex flex-column p-3">
-      <!-- タイトル -->
-      <h5 class="card-title mb-2 fs-6">
-        <%= link_to novel_path(novel), class: "text-decoration-none text-primary fw-semibold" do %>
+  <%= link_to novel_path(novel), class: "text-decoration-none" do %>
+    <div class="card h-100 shadow-sm border-0 bg-body">
+      <div class="card-body d-flex flex-column p-3">
+        <!-- タイトル -->
+        <h5 class="card-title mb-2 fs-6">
           <i class="bi bi-music-note me-1"></i><%= truncate(novel.title, length: 28) %>
-        <% end %>
-      </h5>
+        </h5>
 
-      <!-- 作者 -->
-      <div class="card-subtitle mb-2 text-muted small">
-        <% if novel.user %>
-          <span class="badge bg-primary me-1">会員</span>
-          <%= link_to novel.user.user_name, user_path(novel.user), class: "text-muted text-decoration-none" %>
-        <% elsif novel.author_name.present? %>
-          <span class="badge bg-secondary me-1">ゲスト</span>
-          <%= h(novel.author_name) %>
-        <% else %>
-          <em class="text-muted">作者不明</em>
-        <% end %>
-      </div>
-
-      <!-- ステータス -->
-      <% if novel.respond_to?(:status) && novel.draft? %>
-        <span class="badge bg-secondary mb-2">下書き</span>
-      <% end %>
-
-      <!-- 本文抜粋 -->
-      <p class="card-text small text-body flex-grow-1 lh-sm"><%= truncate(novel.body, length: 100) %></p>
-
-      <!-- タグ -->
-      <div class="mt-2 text-wrap">
-        <% if novel.respond_to?(:tags) %>
-          <% novel.tag_list.each do |tag| %>
-            <%= link_to tag, tag_path(tag), class: "badge bg-secondary me-1" %>
+        <!-- 作者 -->
+        <div class="card-subtitle mb-2 text-body-secondary small">
+          <% if novel.user %>
+            <span class="badge text-bg-primary me-1">会員</span>
+            <%= link_to novel.user.user_name, user_path(novel.user), class: "text-body text-decoration-none" %>
+          <% elsif novel.author_name.present? %>
+            <span class="badge text-bg-secondary me-1">ゲスト</span>
+            <%= h(novel.author_name) %>
+          <% else %>
+            <em class="text-body-tertiary">作者不明</em>
           <% end %>
-        <% end %>
-      </div>
-
-      <!-- 投稿日とコメント -->
-      <div class="mt-3 d-flex justify-content-between align-items-end small text-muted">
-        <div>
-          <%= novel.published? ? "投稿日：" + l(novel.created_at, format: :custom_ja) : "更新日：" + l(novel.updated_at, format: :short) %>
         </div>
-        <div>
+
+        <!-- ステータス -->
+        <% if novel.respond_to?(:status) && novel.draft? %>
+          <span class="badge text-bg-secondary mb-2">下書き</span>
+        <% end %>
+
+        <!-- 本文抜粋 -->
+        <p class="card-text small text-body flex-grow-1 lh-sm">
+          <%= truncate(novel.body, length: 100) %>
+        </p>
+
+        <!-- メタ情報 -->
+        <div class="mt-2 text-wrap text-body-secondary small">
+          <%= novel.published? ?
+              "投稿日：" + l(novel.created_at, format: :custom_ja) :
+              "更新日：" + l(novel.updated_at, format: :short) %>
+        </div>
+        <div class="text-body-secondary small">
           💬 <%= novel.respond_to?(:comments_count) ? novel.comments_count : (novel.comments.size rescue 0) %>
         </div>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>

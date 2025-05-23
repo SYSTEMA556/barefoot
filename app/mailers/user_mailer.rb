@@ -1,12 +1,11 @@
 class UserMailer < ApplicationMailer
-  def email_confirmation(user)
-    @user = user
-    mail to: @user.email,
-         subject: "【#{Rails.application.class.module_parent_name}】メールアドレス確認のご案内"
+  def confirmation_email
+    @user = params[:user]
+    @url  = confirm_email_url(token: @user.confirmation_token)
+    mail(to: @user.email, subject: '【ご確認ください】メールアドレス認証のお願い')
   end
-
   def password_reset(user)
     @user = user
-  mail to: user.email, subject: "Password reset"
+  mail to: user.email, subject: "【ご確認ください】メールアドレス認証のお願い'"
   end
 end

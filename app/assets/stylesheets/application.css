@@ -24,3 +24,21 @@ main > .mx-auto {
     font-size: 1.1rem; /* スマホでは17.6px */
   }
 }
+
+.novel-card {
+  transition: box-shadow 0.2s, background-color 0.2s;
+}
+.novel-card:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.content-body {
+  max-width: 45em;
+  white-space: normal;
+  word-break: break-all;
+  margin: 0 auto;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}

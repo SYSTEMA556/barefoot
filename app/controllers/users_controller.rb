@@ -10,26 +10,34 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailer.email_confirmation(@user).deliver_later
-      redirect_to root_path, notice: "仮登録完了。メールを確認してください。"
+      UserMailer.with(user: @user).confirmation_email.deliver_later
+      flash[:notice] = "登録完了です。メールボックスをご確認くださいませ📧"
+      redirect_to root_path
     else
       render :new
     end
+  rescue ActiveRecord::RecordNotUnique
+    @user ||= User.new(user_params)
+    @user.errors.add(:email, "は既に使用されています")
+    render :new
   end
+
+
 
   def show
         @user = User.find(params[:id])
          @novels = @user.novels.page(params[:page]).per(12)
   end
 
-  def confirm_email
-    user = User.find_by(email_token: params[:token])
+   def confirm_email
+    user = User.find_by(confirmation_token: params[:token])
     if user
-      user.confirm_email!
-      redirect_to new_session_path, notice: "メール認証が完了しました。ログインしてください。"
+      user.update(confirmed_at: Time.current, confirmation_token: nil)
+      flash[:notice] = "メールアドレスを確認いたしましたわ✨"
     else
-      redirect_to root_path, alert: "無効なトークンです。"
+      flash[:alert] = "トークンが無効です…"
     end
+    redirect_to login_path
   end
 
   private
