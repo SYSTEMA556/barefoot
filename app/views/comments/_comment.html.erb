@@ -1,13 +1,11 @@
 <!-- app/views/comments/_comment.html.erb -->
-<div class="mb-3 border rounded p-2">
-  <strong><%= comment.user ? comment.user.user_name : "ゲスト" %></strong>
-  <small class="text-muted"><%= time_ago_in_words(comment.created_at) %>前</small>
+<div class="comment mb-3 p-3 border rounded position-relative bg-light">
+  <p><strong><%= comment.user&.user_name || "名無し" %>：</strong></p>
   <p><%= simple_format(comment.body) %></p>
 
-  <% if comment.user == current_user %>
-    <%= button_to '削除', novel_comment_path(comment.novel, comment),
-          method: :delete,
-          data: { confirm: '削除してもいいの？' },
-          class: 'btn btn-link text-danger small p-0' %>
-  <% end %>
+  <div class="position-absolute top-0 end-0">
+    <%= link_to '🗑', verify_password_comment_path(comment),
+                class: 'btn btn-sm btn-outline-danger',
+                title: "削除にはパスワードが必要です" %>
+  </div>
 </div>

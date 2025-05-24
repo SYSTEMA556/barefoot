@@ -90,6 +90,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
+    bootstrap (5.3.5)
+      popper_js (>= 2.11.8, < 3)
     bootstrap5-kaminari-views (0.0.1)
       kaminari (>= 0.13)
       rails (>= 3.1)
@@ -215,6 +217,7 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.5.9)
+    popper_js (2.11.8)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -341,6 +344,7 @@ DEPENDENCIES
   acts-as-taggable-on
   bcrypt (~> 3.1.7)
   bootsnap
+  bootstrap (~> 5.3.0)
   bootstrap5-kaminari-views
   capybara
   debug

@@ -1,3 +1,9 @@
+// Bootstrap本体を先に読み込む
+@import "bootstrap";
+
+// 自分のカスタムを後で読み込む
+@import "custom";
+
 main > .mx-auto {
   line-height: 1.8;
   font-size: 1.05rem;

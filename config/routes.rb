@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
 
   resources :novels do
-    resources :comments, only:[:create, :destroy]
+    resources :comments, only: [:create, :destroy]
   end
-
+ get '/bookmarks', to: 'bookmarks#index', as: :bookmarks
   resources :tags, only: [:index, :show]
+
+  
 
   root "novels#index"
     resources :novels, only: [:index, :new, :create, :show] do
@@ -22,8 +24,6 @@ Rails.application.routes.draw do
    get "/session", to: "sessions#show", as: :session
    get "/signup", to: "users#new", as: :signup
    delete "/logout", to: "sessions#destroy"
-   
-   
    get "/login", to: "sessions#new"
 
    #resources :users, only: [:new, :create,:show,:index]
@@ -31,19 +31,19 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
 
    resources :users do
-  get :confirm_email, on: :collection
- end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+     get :confirm_email, on: :collection
+     get "up" => "rails/health#show", as: :rails_health_check
+   end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-
+  resources :comments do
+    member do
+      get 'verify_password'
+      post 'confirm_delete'
+    end
+  end
 
   if Rails.env.development?
-   mount LetterOpenerWeb::Engine, at: "/letter_opener"
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
-  # Defines the root path route ("/")
-  # root "posts#index"
+
 end

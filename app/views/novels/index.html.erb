@@ -4,7 +4,7 @@
 
     <!-- 折りたたみ式お知らせ欄 -->
     <div class="card border-0 shadow-sm mb-5">
-      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <div class="card-header  announce-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">📢 おしらせ</h5>
         <button
           class="btn btn-sm btn-light collapsed"
@@ -14,7 +14,7 @@
           aria-expanded="false"
           aria-controls="announceContent"
         >
-          展開／折りたたみ
+          みてみる
         </button>
       </div>
       <div id="announceContent" class="collapse">
@@ -59,6 +59,12 @@
             </div>
           </section>
 
+
+
+        </div>
+      </div>
+    </div>
+    <!-- /折りたたみ式お知らせ欄 -->
           <!-- 上部ページネーション -->
           <% if defined?(paginate) %>
             <nav aria-label="ページネーション" class="mt-4">
@@ -67,12 +73,6 @@
               </div>
             </nav>
           <% end %>
-
-        </div>
-      </div>
-    </div>
-    <!-- /折りたたみ式お知らせ欄 -->
-
 
     <!-- 📚 作品カード一覧 -->
     <section>

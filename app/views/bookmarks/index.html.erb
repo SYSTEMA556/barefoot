@@ -1,0 +1,7 @@
+<h2>My Bookmarks</h2>
+<div class="row row-cols-1 row-cols-md-2 g-4">
+  <% @bookmarked_novels.each do |novel| %>
+    <%= render "novels/novel_card", novel: novel %>
+  <% end %>
+</div>
+<%= paginate @bookmarked_novels %>
