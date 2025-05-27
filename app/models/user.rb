@@ -1,10 +1,6 @@
 # app/models/user.rb
 class User < ApplicationRecord
-  # ───────────────── Devise ───────────────────
-  # :confirmable を入れると Devise 流のメール確認が有効になる
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :confirmable
+
 
   # ──────────────── 関連 ──────────────────────
   has_many :novels,   dependent: :destroy

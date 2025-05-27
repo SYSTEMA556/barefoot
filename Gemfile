@@ -31,7 +31,6 @@ gem "jbuilder"
 
 
 gem 'activeadmin'          # 管理画面本体
-gem 'devise'               # 認証（既にあるなら不要）
 gem 'pundit'               # 権限管理（任意）
 
 # Use Redis adapter to run Action Cable in production
@@ -72,7 +71,7 @@ group :development do
   gem 'rails-i18n', '~> 7.0' 
   #メッセージ表示
   # Gemfile
-  gem 'devise-i18n'  # Devise のビルトインメッセージを多言語化:contentReference[oaicite:4]{index=4}
+ # Devise のビルトインメッセージを多言語化:contentReference[oaicite:4]{index=4}
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"

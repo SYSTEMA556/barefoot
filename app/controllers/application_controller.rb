@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
-  #helper_method :current_user, :logged_in?
-    before_action :configure_permitted_parameters, if: :devise_controller?
+  helper_method :current_user, :logged_in?
 
 
   def current_user
@@ -19,9 +18,6 @@ class ApplicationController < ActionController::Base
 
   protected
   
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up,        keys: [:user_name])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:user_name])
-  end
+
 end
 

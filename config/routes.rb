@@ -1,11 +1,7 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
-  # ─ Devise & ActiveAdmin ──────────────────────────────────────────────────────────
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
 
-  devise_for :users
   # ────────────────────────────────────────────────────────────────────────────────
 
   # トップページ：小説の一覧を表示

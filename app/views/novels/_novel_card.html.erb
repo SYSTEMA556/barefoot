@@ -10,15 +10,7 @@
 
         <!-- 作者 -->
         <div class="card-subtitle mb-2 text-body-secondary small">
-          <% if novel.user %>
-            <span class="badge text-bg-primary me-1">会員</span>
-            <%= link_to novel.user.user_name, user_path(novel.user), class: "text-body text-decoration-none" %>
-          <% elsif novel.author_name.present? %>
-            <span class="badge text-bg-secondary me-1">ゲスト</span>
-            <%= h(novel.author_name) %>
-          <% else %>
-            <em class="text-body-tertiary">作者不明</em>
-          <% end %>
+         
         </div>
 
         <!-- ステータス -->
