@@ -29,6 +29,11 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+
+gem 'activeadmin'          # 管理画面本体
+gem 'devise'               # 認証（既にあるなら不要）
+gem 'pundit'               # 権限管理（任意）
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 gem 'bcrypt', '~> 3.1.7'
@@ -72,6 +77,8 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]

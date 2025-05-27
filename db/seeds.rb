@@ -1,33 +1,21 @@
 # db/seeds.rb
+puts 'Seeding data...'
 
-require 'faker'
+# ---- Admin ユーザー ----
+AdminUser.where(email: 'admin@example.com').first_or_create!(
+  password:              'password',
+  password_confirmation: 'password'
+)
 
-puts "Seeding data..."
-
-# ユーザーの作成
-User.destroy_all
-25.times do
+# ---- テストユーザー10件 ----
 User.create!(
-  user_name:  Faker::Name.unique.name,
-  email:      Faker::Internet.unique.email,
-  password:   'password',
-  password_confirmation: 'password',
-  activated:  true,                # ← モック用に即時有効化でも可
-  activated_at: Time.current
+  email:                 'test@example.com',
+  user_name:             'tester',
+  password:              'password123',
+  password_confirmation: 'password123',
+  confirmed_at:          Time.current  # テスト用に即確認済み
 )
 
 end
 
-# 小説の作成
-Novel.destroy_all
-users = User.all
-100.times do
-  Novel.create!(
-    title:       Faker::Book.title,
-    author_name: Faker::Book.author,            # ← ここを追加！
-    body:        Faker::Lorem.paragraphs(number: 5).join("\n\n"),
-    status:      :published,
-    user:        users.sample
-  )
-end
-puts "Seeding completed."
+puts 'Done.'

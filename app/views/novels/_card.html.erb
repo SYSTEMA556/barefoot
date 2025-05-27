@@ -1,7 +1,9 @@
 <%= link_to novel_path(novel), class: "novel-card card h-100 text-decoration-none text-dark" do %>
+ <div class="card-group">
   <div class="card-body">
     <h5 class="card-title"><%= novel.title %></h5>
     <p class="card-text"><%= truncate(novel.body, length: 100) %></p>
   </div>
+   </div>
   
 <% end %>

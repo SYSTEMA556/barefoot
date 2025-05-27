@@ -1,0 +1,14 @@
+<!-- app/views/bookmarks/index.html.erb -->
+
+<h1 class="mb-4">🔖 マイブックマーク一覧</h1>
+
+<% if @bookmarked_novels.any? %>
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <% @bookmarked_novels.each do |novel| %>
+      <%= render partial: "novels/novel_card", locals: { novel: novel } %>
+    <% end %>
+  </div>
+  <%= paginate @bookmarked_novels, theme: 'bootstrap-5', class: 'mt-4' %>
+<% else %>
+  <p class="text-center">まだブックマークされた作品はありませんわ。</p>
+<% end %>
