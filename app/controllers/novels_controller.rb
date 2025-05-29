@@ -8,11 +8,12 @@ class NovelsController < ApplicationController
   #before_action :require_login, only: [:new, :create, :my_posts, :drafts]
 
 def index
-  @novels = Novel.published
-                 .includes(:user)
-                 .order(created_at: :desc)
-                 .page(params[:page])
-                 .per(20)
+  @q = Novel.ransack(params[:q])
+    @novels = @q.result(distinct: true)
+               .published
+               .includes(:user, :tags)
+               .order(created_at: :desc)
+               .page(params[:page]).per(20)
 end
     #↑ここのメソッドチェーンに.publishedつけると表示されない。多分seedで作ったデータに入ってない。あと新規登録した作品が反映されていない
   def new

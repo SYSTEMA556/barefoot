@@ -1,0 +1,10 @@
+<%= search_form_for @q,
+                    url: novels_path,
+                    method: :get,
+                    local: true,
+                    html: { class: 'd-flex mb-4' } do |f| %>
+  <%= f.search_field :title_or_body_or_author_name_or_tags_name_cont,
+                     class: 'form-control me-2',
+                     placeholder: '作品・作者・本文・タグを検索…' %>
+  <%= f.submit '検索', class: 'btn btn-outline-primary' %>
+<% end %>

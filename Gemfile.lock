@@ -398,6 +398,7 @@ DEPENDENCIES
   pundit
   rails (~> 7.1.5, >= 7.1.5.1)
   rails-i18n (~> 7.0)
+  ransack
   sassc-rails
   selenium-webdriver
   sprockets-rails
