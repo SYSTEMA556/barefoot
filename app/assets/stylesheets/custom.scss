@@ -4,3 +4,26 @@
   border-color:     #ffd480;
   color:            #77291b;
 }
+
+// ———— カラー変数 ————
+$btn-primary-bg:  #5B4A42; // 焦げ茶に近いダークブラウン
+$btn-secondary-bg: #8C7763; // 渋めのベージュブラウン
+$btn-text-color:   #F0E6D2; // クリームがかったオフホワイト
+$global-text-color: #4A3F35; // 落ち着いたダークグレー
+
+// ———— ボタンスタイル ————
+.btn-main {
+  background-color: $btn-primary-bg;
+  border-color:     $btn-primary-bg;
+  color:            $btn-text-color;
+}
+.btn-sub {
+  background-color: $btn-secondary-bg;
+  border-color:     $btn-secondary-bg;
+  color:            $btn-text-color;
+}
+
+// ———— テキスト全体 ————
+body, .container-fluid {
+  color: $global-text-color;
+}

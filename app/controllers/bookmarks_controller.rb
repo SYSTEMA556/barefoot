@@ -3,6 +3,7 @@
 class BookmarksController < ApplicationController
   # ── ログイン必須 ───────────────────────────────────────────
   before_action :authenticate_user!
+   before_action :require_login 
   # ── 小説取得は create/destroy 時のみ ─────────────────────────
   before_action :set_novel, only: [:create, :destroy]
   # （index は novel 単体じゃなくユーザー全体の一覧なので不要）

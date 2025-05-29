@@ -112,6 +112,6 @@ end
     end
 
   def novel_params
-    params.require(:novel).permit(:title,:author_name, :body,:user_name,:tag_list)
+    params.require(:novel).permit(:title,:author_name, :body,:user_name,:tag_list,:font_choice)
   end
 end
