@@ -1,0 +1,64 @@
+ <!-- 折りたたみ式お知らせ欄 -->
+    <div class="card border-0 shadow-sm mb-5">
+      <div class="card-header  announce-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">📢 おしらせ</h5>
+        <button
+          class="btn btn-sm btn-light collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#announceContent"
+          aria-expanded="false"
+          aria-controls="announceContent"
+        >
+          みてみる
+        </button>
+      </div>
+      <div id="announceContent" class="collapse">
+        <div class="card-body">
+          <!-- 🏮 フェスティバル告知 -->
+          <section class="mb-5">
+            <h2 class="fs-5 fw-bold mb-3">🎉 おしらせ：フェスティバル会場はこちら</h2>
+            <div class="alert alert-info d-flex justify-content-between align-items-start flex-column flex-sm-row">
+              <div class="mb-2 mb-sm-0">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                <strong>まつり１</strong><br>
+                <small class="text-muted">こんなまつりです</small>
+              </div>
+              <a href="#" class="btn btn-sm btn-primary align-self-sm-end">みにいく</a>
+            </div>
+          </section>
+
+          <!-- 🏷 注目タグ -->
+          <section class="mb-5">
+            <h2 class="fs-5 fw-bold mb-3"><i class="bi bi-tags me-1"></i>注目のタグ</h2>
+            <div class="d-flex flex-wrap gap-2">
+              <% ["恋愛","SF","冒険","ホラー","ファンタジー"].each do |tag_name| %>
+                <a href="#" class="badge bg-secondary text-light fs-6 px-3 py-2 text-decoration-none">
+                  ✔️ <%= tag_name %>
+                </a>
+              <% end %>
+            </div>
+          </section>
+
+          <!-- 📘 注目作品 -->
+          <section class="mb-5">
+            <div class="card mb-4 shadow-sm border-0">
+              <div class="card-body d-flex flex-column flex-md-row justify-content-between">
+                <div>
+                  <h3 class="card-title fs-5 mb-1">作品タイトル</h3>
+                  <p class="card-subtitle text-muted mb-2">作者名</p>
+                  <span class="badge bg-info text-dark me-1">幻想</span>
+                  <span class="badge bg-info text-dark">バトル</span>
+                </div>
+                <div class="text-muted mt-3 mt-md-0"><small>💬 コメント：8</small></div>
+              </div>
+            </div>
+          </section>
+
+
+
+        </div>
+      </div>
+    </div>
+    
+    <!-- /折りたたみ式お知らせ欄 -->

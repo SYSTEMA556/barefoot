@@ -1,11 +1,7 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
-  # ─ Devise & ActiveAdmin ──────────────────────────────────────────────────────────
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
 
-  devise_for :users
   # ────────────────────────────────────────────────────────────────────────────────
  resources :users, only: [:show, :edit, :update] do
     get :confirm_email, on: :collection
@@ -18,7 +14,7 @@ Rails.application.routes.draw do
   # ─ Novel（作品）関連のルーティング ───────────────────────────────────────────
   resources :novels, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     # 小説ごとのブックマーク（作成・解除）
-    resources :bookmarks, only: [:create, :destroy]
+    #resources :bookmarks, only: [:create, :destroy]
 
     # 小説詳細ページでトグル式にブックマークを切り替え
     member do
@@ -34,12 +30,14 @@ Rails.application.routes.draw do
     end
 
     # コメント機能のネスト（投稿前確認・削除確認付き）
-    resources :comments, only: [:new, :create] do
-      member do
-        get  :verify_password  # GET  /novels/:novel_id/comments/:id/verify_password
-        post :confirm_delete   # POST /novels/:novel_id/comments/:id/confirm_delete
-      end
+  resources :comments, only: [:create, :destroy] do
+    member do
+      post :confirm_delete
     end
+    member do
+      get :verify_password
+    end
+  end
   end
   # ────────────────────────────────────────────────────────────────────────────────
 

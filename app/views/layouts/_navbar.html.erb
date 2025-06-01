@@ -20,35 +20,8 @@
             <i class="bi bi-journal-plus me-1"></i> 新規投稿
           <% end %>
         </li>
-        <li class="nav-item">
-          <%= link_to bookmarks_path, class: 'nav-link py-2 px-3' do %>
-            <i class="bi bi-bookmark-fill me-1"></i> ブックマーク
-          <% end %>
-        </li>
-
-        <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to user_path(current_user), class: 'nav-link py-2 px-3' do %>
-              <i class="bi bi-person-circle me-1"></i> マイページ
-            <% end %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'ログアウト',
-                        destroy_user_session_path,
-                        method: :delete, data: { confirm: "本当にログアウトしますか？" } %>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to new_user_registration_path, class: 'nav-link py-2 px-3' do %>
-              <i class="bi bi-person-plus me-1"></i> 登録
-            <% end %>
-          </li>
-          <li class="nav-item">
-            <%= link_to new_user_session_path, class: 'nav-link py-2 px-3' do %>
-              <i class="bi bi-box-arrow-in-right me-1"></i> ログイン
-            <% end %>
-          </li>
-        <% end %>
+  
+    
       </ul>
             <form class="d-flex ms-3 align-items-center">
         <div class="form-check form-switch text-nowrap">

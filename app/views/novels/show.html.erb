@@ -24,21 +24,6 @@ end %>
     <% end %>
   </p>
 
-  <div class="bookmark-btn mb-3">
-    <% if current_user %>
-      <% if current_user.bookmarked_novels.exists?(@novel.id) %>
-        <%= button_to '🔖 ブックマーク済み',
-                      toggle_bookmark_novel_path(@novel),
-                      method: :post,
-                      class: 'btn btn-outline-secondary' %>
-      <% else %>
-        <%= button_to '🔖 ブックマーク',
-                      toggle_bookmark_novel_path(@novel),
-                      method: :post,
-                      class: 'btn btn-outline-primary' %>
-      <% end %>
-    <% end %>
-  </div>
 
   <!-- 本文 -->
   <div class="novel-body mb-5">

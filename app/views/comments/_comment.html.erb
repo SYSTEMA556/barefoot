@@ -1,12 +1,12 @@
 <!-- app/views/comments/_comment.html.erb -->
-
-<div class="comment mb-3 p-3 border rounded position-relative bg-light">
-  <p><strong><%= comment.user&.user_name || "名無し" %>：</strong></p>
-  <p><%= simple_format(comment.body) %></p>
-  <div class="position-absolute top-0 end-0">
-    <%= link_to '🗑',
-        verify_password_novel_comment_path(comment.novel, comment),
-        class: 'btn btn-sm btn-outline-danger',
-        title: "削除にはパスワードが必要です" %>
-  </div>
+<div class="position-relative mb-3 p-3 border rounded">
+  <p><%= comment.body %></p>
+  <% if comment.persisted? %>
+    <div class="position-absolute top-0 end-0">
+      <!-- ゲストパスワード入力画面へ飛ぶリンク -->
+      <%= link_to '🗑', verify_password_novel_comment_path(comment.novel, comment),
+                  class: 'btn btn-sm btn-outline-danger',
+                  title: "削除にはパスワードが必要です" %>
+    </div>
+  <% end %>
 </div>
