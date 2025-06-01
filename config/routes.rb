@@ -7,7 +7,11 @@ Rails.application.routes.draw do
 
   devise_for :users
   # ────────────────────────────────────────────────────────────────────────────────
-
+ resources :users, only: [:show, :edit, :update] do
+    get :confirm_email, on: :collection
+    # アプリケーションのヘルスチェック用
+    get "up" => "rails/health#show", as: :rails_health_check
+  end
   # トップページ：小説の一覧を表示
   root "novels#index"
 
@@ -44,17 +48,8 @@ Rails.application.routes.draw do
   # ────────────────────────────────────────────────────────────────────────────────
 
   # ─ セッション／ユーザー関連 ───────────────────────────────────────────────────
-  resources :sessions, only: [:new, :create]
-  get    "/session",        to: "sessions#show",    as: :session
-  get    "/signup",         to: "users#new",        as: :signup
-  get    "/login",          to: "sessions#new"
-  delete "/logout",         to: "sessions#destroy"
-  resources :password_resets, only: [:new, :create, :edit, :update]
-  resources :users do
-    get :confirm_email, on: :collection
-    # アプリケーションのヘルスチェック用
-    get "up" => "rails/health#show", as: :rails_health_check
-  end
+
+ 
   # ────────────────────────────────────────────────────────────────────────────────
 
   # 開発環境限定：送信メールのプレビュー

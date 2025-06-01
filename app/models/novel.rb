@@ -7,7 +7,10 @@ class Novel < ApplicationRecord
   validates :title,       presence: true
   validates :author_name, presence: true
   validates :body,        presence: true
-
+  validates :font_choice, inclusion: {
+  in: ["こぶり明朝", "游ゴシック", "MS明朝", "ヒラギノ角ゴ", "Shippori Mincho", "Noto Serif JP"],
+  allow_nil: true
+}
   has_many :novel_tags,           dependent: :destroy
   has_many :tags, through: :novel_tags
   has_many :comments,             dependent: :destroy

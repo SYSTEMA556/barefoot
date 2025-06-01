@@ -1,0 +1,28 @@
+<h1>作品を編集</h1>
+
+<%= form_with(model: @novel, local: true) do |f| %>
+  <% if @novel.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@novel.errors.count, "error") %> が発生しました:</h2>
+      <ul>
+        <% @novel.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :title, "タイトル" %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :body, "本文" %>
+    <%= f.text_area :body, rows: 10, class: "form-control" %>
+  </div>
+
+  <%= f.submit "更新する", class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to "戻る", novel_path(@novel), class: "btn btn-secondary mt-3" %>

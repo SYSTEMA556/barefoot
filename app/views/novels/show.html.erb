@@ -1,45 +1,58 @@
-<h1><%= @novel.title %></h1>
+<!-- app/views/novels/show.html.erb -->
 
+<%# -------- フォントクラスの決定 -------- %>
+<% font_class = case @novel.font_choice
+  when "こぶり明朝"       then "font-koburi"
+  when "游ゴシック"       then "font-yu"
+  when "MS明朝"           then "font-ms"
+  when "ヒラギノ角ゴ"     then "font-hiragino"
+  when "Shippori Mincho"  then "font-shippori"
+  when "Noto Serif JP"    then "font-noto-serif"
+  else "font-default"
+end %>
 
-<p>
-  投稿者:
-  <% if @novel.user.present? %>
-    <%= @novel.user.user_name %>
-  <% else %>
-    <%= @novel.author_name %>
-  <% end %>
-</p>
-<div class="bookmark-btn mb-3">
- <% if current_user %>
-  <% if current_user.bookmarked_novels.exists?(@novel.id) %>
-    <%= button_to '🔖 ブックマーク済み',
-                  toggle_bookmark_novel_path(@novel),
-                  method: :post,
-                  class: 'btn btn-outline-secondary' %>
-  <% else %>
-    <%= button_to '🔖 ブックマーク',
-                  toggle_bookmark_novel_path(@novel),
-                  method: :post,
-                  class: 'btn btn-outline-primary' %>
-  <% end %>
-<% end %>
+<div class="<%= font_class %>">
+
+  <h1 class="mb-2"><%= @novel.title %></h1>
+
+  <p>
+    投稿者:
+    <% if @novel.user.present? %>
+      <%= @novel.user.user_name %>
+    <% else %>
+      <%= @novel.author_name %>
+    <% end %>
+  </p>
+
+  <div class="bookmark-btn mb-3">
+    <% if current_user %>
+      <% if current_user.bookmarked_novels.exists?(@novel.id) %>
+        <%= button_to '🔖 ブックマーク済み',
+                      toggle_bookmark_novel_path(@novel),
+                      method: :post,
+                      class: 'btn btn-outline-secondary' %>
+      <% else %>
+        <%= button_to '🔖 ブックマーク',
+                      toggle_bookmark_novel_path(@novel),
+                      method: :post,
+                      class: 'btn btn-outline-primary' %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- 本文 -->
+  <div class="novel-body mb-5">
+    <%= simple_format(@novel.body) %>
+  </div>
 </div>
 
-
-<div>
-  <%= simple_format(@novel.body) %>
-</div>
-
-
-
-<!-- コメント一覧 -->
+<!-- コメントエリア -->
 <h3>コメント</h3>
 <div id="comments">
   <%= render @novel.comments %>
 </div>
 
-<!-- コメント投稿フォーム -->
 <%= render partial: 'comments/form',
-             locals: { novel: @novel, comment: @novel.comments.build } %>
+           locals: { novel: @novel, comment: @novel.comments.build } %>
 
-<%= link_to "一覧に戻る", novels_path %>
+<%= link_to "一覧に戻る", novels_path, class: 'btn btn-link' %>

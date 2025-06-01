@@ -22,6 +22,13 @@ $global-text-color: #4A3F35; // 落ち着いたダークグレー
   border-color:     $btn-secondary-bg;
   color:            $btn-text-color;
 }
+.font-koburi       { font-family: "Koburimincho", serif; }
+.font-yu           { font-family: "Yu Gothic", sans-serif; }
+.font-ms           { font-family: "MS Mincho", serif; }
+.font-hiragino     { font-family: "Hiragino Kaku Gothic Pro", sans-serif; }
+.font-shippori     { font-family: "Shippori Mincho", serif; }
+.font-noto-serif   { font-family: "Noto Serif JP", serif; }
+.font-default      { font-family: sans-serif; }
 
 // ———— テキスト全体 ————
 body, .container-fluid {

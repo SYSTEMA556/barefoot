@@ -5,6 +5,7 @@
     <!-- フォームカラム -->
     <div class="col-md-8">
       <%= form_with model: @novel, url: novels_path, local: true, html: { id: 'novel-form' } do |f| %>
+      <%= f.hidden_field :preview_mode, value: 'false', id: 'preview-mode-field' %>
         <!-- タイトル -->
         <div class="mb-3">
           <%= f.text_field :title, class: 'form-control', placeholder: 'タイトル' %>
@@ -24,50 +25,27 @@
         </div>
         <!-- フォント選択 -->
         <div class="mb-3">
-          <%= f.label :font_choice, 'フォント' %>
-          <%= f.select :font_choice,
-                       ['こぶり明朝','游ゴシック','MS明朝','ヒラギノ角ゴ'],
-                       {}, class: 'form-select' %>
+        <%= f.label :font_choice, 'フォント' %>
+<%= f.select :font_choice,
+             [
+               ['Shippori Mincho（Google）', 'Shippori Mincho'],
+               ['Noto Serif JP（Google）',   'Noto Serif JP'],
+               ['こぶり明朝',               'こぶり明朝'],
+               ['游ゴシック',               '游ゴシック'],
+               ['MS明朝',                   'MS明朝'],
+               ['ヒラギノ角ゴ',             'ヒラギノ角ゴ']
+             ],
+             {}, class: 'form-select' %>
         </div>
         <!-- 送信ボタン -->
-        <div class="mb-3">
-          <%= f.submit '投稿する', class: 'btn btn-primary' %>
-        </div>
+       <div class="mb-3 d-flex gap-2">
+        <%= button_tag 'プレビュー', type: 'submit', class: 'btn btn-secondary',
+            onclick: "document.getElementById('preview-mode-field').value = 'true'; this.form.action='#{preview_novels_path}'" %>
+
+
+        <%= f.submit '投稿する', class: 'btn btn-primary' %>
+      </div>
       <% end %>
     </div>
 
-    <!-- プレビューカラム -->
-    <div class="col-md-4">
-      <h5>プレビュー</h5>
-      <div id="preview" class="border rounded p-3"></div>
-    </div>
-  </div>
-</div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const form    = document.getElementById('novel-form');
-  const preview = document.getElementById('preview');
-
-  if (!form || !preview) {
-    console.error('フォームまたはプレビュー要素が見つかりませんでしたわ。IDをチェックして！');
-    return;
-  }
-
-  function renderPreview() {
-    const titleField  = form.querySelector('[name="novel[title]"]');
-    const authorField = form.querySelector('[name="novel[author_name]"]');
-    const bodyField   = form.querySelector('[name="novel[body]"]');
-    const fontField   = form.querySelector('[name="novel[font_choice]"]');
-
-    preview.style.fontFamily = fontField.value || 'inherit';
-    preview.innerHTML = `
-      <h2>${titleField.value}</h2>
-      <p><em>作者：${authorField.value}</em></p>
-      <div>${bodyField.value.replace(/\n/g, '<br>')}</div>
-    `;
-  }
-
-  form.addEventListener('input', renderPreview);
-  renderPreview();
-});
-</script>
+  

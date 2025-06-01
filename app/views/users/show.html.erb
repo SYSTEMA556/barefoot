@@ -1,14 +1,33 @@
 <!-- app/views/users/show.html.erb -->
 <section class="mb-5">
   <h2 class="h4"><%= @user.user_name %> さんのページ</h2>
- <!-- <p>Email: <%= @user.email %></p>  危ないが過ぎる-->
+
+  <%# ── 自身のプロフィール編集ボタン ── %>
+  <% if user_signed_in? && current_user == @user %>
+    <div class="text-end mb-3">
+      <%= link_to '✍️ プロフィール編集', edit_user_registration_path,
+                  class: 'btn btn-outline-primary' %>
+    </div>
+  <% end %>
+  <%# ──────────────────────────────── %>
 
   <h3 class="h5 mt-4">投稿作品一覧</h3>
   <div class="row row-cols-1 row-cols-lg-2 g-4">
-  <% @novels.each do |novel| %>
-    <%= render partial: "novels/novel_card", locals: { novel: novel } %>
-  <% end %>
-</div>
+    <% @novels.each do |novel| %>
+      <div class="col">
+        <%= render partial: "novels/novel_card", locals: { novel: novel } %>
+
+        <%# ── 各作品に対する“編集”ボタン ── %>
+        <% if user_signed_in? && current_user == novel.user %>
+          <div class="mt-2 text-end">
+            <%= link_to '✎ 編集', edit_novel_path(novel),
+                        class: 'btn btn-sm btn-outline-secondary' %>
+          </div>
+        <% end %>
+        <%# ─────────────────────────────────── %>
+      </div>
+    <% end %>
+  </div>
 
   <% if defined?(paginate) %>
     <nav aria-label="Page navigation" class="mt-4">

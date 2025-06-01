@@ -1,55 +1,50 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="<%= theme = (cookies[:bs_theme] || 'body') %>" id="mainNavbar">
+<nav class="navbar navbar-expand-lg bg-body-tertiary"
+     data-bs-theme="<%= cookies[:bs_theme] || 'body' %>"
+     id="mainNavbar">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Novel site name</a>
+    <%= link_to 'Novel site name', root_path, class: 'navbar-brand' %>
 
-    <!-- ハンバーガーメニュー -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
+    <!-- ハンバーガー -->
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto text-center gap-2 px-2">
-        <%# ナビリンクたち %>
+        <!-- 共通リンク -->
         <li class="nav-item">
-          <%= link_to new_novel_path, class: "nav-link py-2 px-3" do %>
+          <%= link_to new_novel_path, class: 'nav-link py-2 px-3' do %>
             <i class="bi bi-journal-plus me-1"></i> 新規投稿
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to bookmarks_path, class: "nav-link py-2 px-3" do %>
+          <%= link_to bookmarks_path, class: 'nav-link py-2 px-3' do %>
             <i class="bi bi-bookmark-fill me-1"></i> ブックマーク
           <% end %>
         </li>
 
-        <% if current_user %>
+        <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to user_path(current_user), class: "nav-link py-2 px-3" do %>
+            <%= link_to user_path(current_user), class: 'nav-link py-2 px-3' do %>
               <i class="bi bi-person-circle me-1"></i> マイページ
             <% end %>
           </li>
           <li class="nav-item">
-            <%= button_to logout_path,
-                          method: :delete,
-                          form: { class: "d-inline" },
-                          class: "btn btn-sm btn-outline-light mt-1 px-3" do %>
-              <i class="bi bi-box-arrow-right me-1"></i> ログアウト
-            <% end %>
+            <%= link_to 'ログアウト',
+                        destroy_user_session_path,
+                        method: :delete, data: { confirm: "本当にログアウトしますか？" } %>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to new_user_path, class: "nav-link py-2 px-3" do %>
+            <%= link_to new_user_registration_path, class: 'nav-link py-2 px-3' do %>
               <i class="bi bi-person-plus me-1"></i> 登録
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to login_path, class: "nav-link py-2 px-3" do %>
+            <%= link_to new_user_session_path, class: 'nav-link py-2 px-3' do %>
               <i class="bi bi-box-arrow-in-right me-1"></i> ログイン
             <% end %>
           </li>
