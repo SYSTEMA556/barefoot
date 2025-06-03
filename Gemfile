@@ -15,8 +15,8 @@ gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
-gem "kaminari"
 
+gem "kaminari" 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
@@ -25,7 +25,7 @@ gem "turbo-rails"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
-
+gem 'will_paginate', '~> 3.3'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
