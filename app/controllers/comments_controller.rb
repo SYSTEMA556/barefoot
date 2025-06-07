@@ -1,9 +1,8 @@
-# app/controllers/comments_controller.rb
-
 class CommentsController < ApplicationController
   before_action :set_novel
-  before_action :set_comment, only: [:verify_password, :confirm_delete]
+  before_action :set_comment, only: [:confirm_delete, :verify_password]
 
+  # コメント投稿
   def create
     @comment = @novel.comments.build(comment_params)
     if @comment.save
@@ -14,23 +13,23 @@ class CommentsController < ApplicationController
     end
   end
 
-  # パスワード入力画面を表示
-  def verify_password
-    # 特に処理は不要。対応するビューを表示するだけ
+  # 削除確認画面を表示
+  def confirm_delete
+    # ビューでパスワード入力フォームを表示するだけよ♡
   end
 
   # パスワード認証後に削除
-# app/controllers/comments_controller.rb
-def confirm_delete
-  if @comment.authenticate_guest_password(params[:comment][:guest_password])
-    @comment.destroy
-    redirect_to novel_path(@novel), notice: "コメントを削除しましたわ♡"
-  else
-    flash.now[:alert] = "パスワードが違いますわ…"
-    render :verify_password
-  end
-end
+ def verify_password
+    # ネストされた場合もトップレベルの場合も拾う
+    pw = params.dig(:comment, :guest_password) || params[:guest_password]
 
+    if @comment.authenticate_guest_password(pw)
+      @comment.destroy
+      redirect_to novel_path(@novel), notice: 'コメントを削除しましたわ♡'
+    else
+      redirect_to novel_path(@novel), alert: 'パスワードが違いますわ…'
+    end
+  end
 
   private
 
@@ -43,6 +42,6 @@ end
   end
 
   def set_comment
-    @comment = Comment.find(params[:id])
+    @comment = @novel.comments.find(params[:id])
   end
 end

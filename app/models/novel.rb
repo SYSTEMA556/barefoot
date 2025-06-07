@@ -3,8 +3,12 @@ class Novel < ApplicationRecord
 
   enum status: { draft: 0, published: 1 }
   has_secure_password validations: false  
-  validates :password, presence: true, on: :create
 
+  scope :recent, -> { order(created_at: :desc) }
+  scope :no_tags, -> { left_joins(:tags).where(tags: { id: nil }) }
+  scope :published, -> { where(status: 'published') }
+
+  validates :password, presence: true, on: :create
   validates :title,       presence: true
   validates :author_name, presence: true
   validates :body,        presence: true
@@ -55,10 +59,19 @@ class Novel < ApplicationRecord
     order(view_count: :desc, created_at: :desc)
   }
 
+    # 本⽂の単語数を計算する ransacker
+  ransacker :word_count do
+    # 空白で区切られた単語数
+    Arel.sql("LENGTH(body) - LENGTH(REPLACE(body, ' ', '')) + 1")
+  end
   # updated_at を使って更新日時 DESC ソート
   scope :order_by_updated, -> {
     order(updated_at: :desc)
   }
+  
+  def self.ransackable_scopes(authenticated = false)
+    %i[recent no_tags published]
+  end
 
   # ransack 用ホワイトリスト（既存）
   def self.ransackable_attributes(_auth = nil)

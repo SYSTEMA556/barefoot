@@ -68,7 +68,9 @@ class NovelsController < ApplicationController
     @q = Novel.ransack(params[:q])
   end
   def enter_password
-    # ここではただフォームをレンダーするだけですわ
+    @novel = Novel.find(params[:id])
+    @q     = Novel.ransack(params[:q])  # ← これを追加！
+    # あとは既存の処理…
   end
 
   def verify_password

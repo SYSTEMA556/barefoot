@@ -2,13 +2,9 @@
 
 puts 'Seeding novels only...'
 
-# ---- ダミー小説データ大量作成 ----
-# User や Devise モデルは使わず、Novel のみシードしますわ。
-# Faker が使えるならランダム生成、なければ固定パターンで作りますの。
-
 if defined?(Faker)
-  # Faker がある場合は 20 件のランダム小説を作成
-  20.times do |i|
+  # Faker があるなら 8,000 件のランダム小説を作成
+  8_000.times do |i|
     title       = Faker::Book.title
     author_name = Faker::Name.name
     body        = Faker::Lorem.paragraph(sentence_count: 5)
@@ -22,17 +18,20 @@ if defined?(Faker)
       font_choice:          font,
       password:             password,
       password_confirmation: password,
-      status:               "published"
+      status:               ["draft", "published"].sample
     )
-    puts "Created Novel: #{title} / #{author_name}"
+
+    # ログはインターバルを置かないと見づらいので、1000件ごとにだけ出す
+    puts "Created #{i+1}/8000 novels..." if (i + 1) % 1_000 == 0
   end
 else
-  # Faker がない場合は 10 件の固定ダミー小説を作成
-  10.times do |i|
+  # Faker がない場合は固定パターンで 8,000 件作成
+  8_000.times do |i|
+    idx = i % 6
     title       = "ダミー小説#{i + 1}"
     author_name = "ダミー作者#{i + 1}"
     body        = "これはダミーの本文 #{i + 1} です。"
-    font        = ["こぶり明朝", "游ゴシック", "MS明朝", "ヒラギノ角ゴ", "Shippori Mincho", "Noto Serif JP"][i % 6]
+    font        = ["こぶり明朝", "游ゴシック", "MS明朝", "ヒラギノ角ゴ", "Shippori Mincho", "Noto Serif JP"][idx]
     password    = "dummypass#{i + 1}"
 
     Novel.create!(
@@ -42,10 +41,11 @@ else
       font_choice:          font,
       password:             password,
       password_confirmation: password,
-      status:               "draft"
+      status:               (i.even? ? "draft" : "published")
     )
-    puts "Created Dummy Novel: #{title} / #{author_name}"
+
+    puts "Created dummy novel #{i+1}/8000..." if (i + 1) % 1_000 == 0
   end
 end
 
-puts 'Done seeding novels.'
+puts 'Done seeding 8,000 novels.'

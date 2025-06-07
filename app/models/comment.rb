@@ -1,10 +1,8 @@
 class Comment < ApplicationRecord
   belongs_to :user, optional: true
-  belongs_to :novel
-  has_secure_password :guest_password
+ belongs_to :novel
+  has_secure_password :guest_password, validations: false
+validates :guest_password, presence: true, unless: -> { user_id.present? }
+validates_confirmation_of :guest_password, unless: -> { user_id.present? }
 
-  # has_secure_password で authenticate が使えるようにする
-
-  # 削除時のみゲストパスワードを必須にするバリデーション例
-  validates :guest_password, presence: true, on: :destroy
 end

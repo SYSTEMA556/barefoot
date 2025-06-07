@@ -1,10 +1,46 @@
+<!-- app/views/shared/_search_novel_form.html.erb -->
 <%= search_form_for @q,
                     url: novels_path,
                     method: :get,
                     local: true,
-                    html: { class: 'd-flex mb-4' } do |f| %>
+                    html: { class: 'd-flex align-items-center mb-4' } do |f| %>
+
+  <!-- メインの検索フィールド -->
   <%= f.search_field :title_or_body_or_author_name_or_tags_name_cont,
-                     class: 'form-control me-2',
+                     class: 'form-control me-3',
                      placeholder: '作品・作者・本文・タグを検索…' %>
+
+  <!-- チェックボックス群を横並びで折返し禁止 -->
+  <div class="d-flex flex-nowrap align-items-center me-3">
+    <div class="form-check form-check-inline me-2 text-nowrap">
+      <%= f.check_box :recent,
+                      { class: 'form-check-input', id: 'q_recent' },
+                      '1', '0' %>
+      <%= f.label :recent,
+                  '最新順',
+                  class: 'form-check-label text-nowrap',
+                  for: 'q_recent' %>
+    </div>
+    <div class="form-check form-check-inline me-2 text-nowrap">
+      <%= f.check_box :no_tags,
+                      { class: 'form-check-input', id: 'q_no_tags' },
+                      '1', '0' %>
+      <%= f.label :no_tags,
+                  'タグなし',
+                  class: 'form-check-label text-nowrap',
+                  for: 'q_no_tags' %>
+    </div>
+    <div class="form-check form-check-inline text-nowrap">
+      <%= f.check_box :published,
+                      { class: 'form-check-input', id: 'q_published' },
+                      '1', '0' %>
+      <%= f.label :published,
+                  '公開済み',
+                  class: 'form-check-label text-nowrap',
+                  for: 'q_published' %>
+    </div>
+  </div>
+
+  <!-- 検索ボタン -->
   <%= f.submit '検索', class: 'btn btn-outline-primary' %>
 <% end %>
