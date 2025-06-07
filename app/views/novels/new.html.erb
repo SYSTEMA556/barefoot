@@ -23,6 +23,21 @@
           <%= f.label :tag_list, 'タグ（スペース区切り）' %>
           <%= f.text_field :tag_list, class: 'form-control', placeholder: '例：ファンタジー 冒険 恋愛' %>
         </div>
+
+         <!-- パスワード入力（必須） -->
+  <div class="mb-3">
+    <%= f.label :password, "編集用パスワード", class: "form-label" %>
+    <%= f.password_field :password, class: "form-control", required: true, autocomplete: "new-password" %>
+    <div class="form-text">
+      作品を編集するときに必要になりますので、忘れないようにしてくださいませ。
+    </div>
+  </div>
+
+  <!-- パスワード確認（必須） -->
+  <div class="mb-3">
+    <%= f.label :password_confirmation, "パスワード（確認用）", class: "form-label" %>
+    <%= f.password_field :password_confirmation, class: "form-control", required: true, autocomplete: "new-password" %>
+  </div>
         <!-- フォント選択 -->
         <div class="mb-3">
         <%= f.label :font_choice, 'フォント' %>

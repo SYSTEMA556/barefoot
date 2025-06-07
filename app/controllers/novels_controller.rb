@@ -1,5 +1,6 @@
 class NovelsController < ApplicationController
-  before_action :set_novel, only: [:show, :edit, :update, :destroy]
+  before_action :set_novel, only: [:show, :enter_password, :verify_password, :edit, :update, :destroy]
+  before_action :set_search, only: [:index, :show, :new, :edit, :create, :update, :destroy]
 
   def index
     # Ransack で検索オブジェクトを生成
@@ -57,6 +58,23 @@ class NovelsController < ApplicationController
     @novel.destroy
     redirect_to novels_path, notice: "作品を削除しましたわ♡"
   end
+  def set_search
+    @q = Novel.ransack(params[:q])
+  end
+  def enter_password
+    # ここではただフォームをレンダーするだけですわ
+  end
+
+  def verify_password
+    # モデルの authenticate メソッドで検証。trueならばedit画面へリダイレクト
+    if @novel.authenticate(params[:password])
+      redirect_to edit_novel_path(@novel)
+    else
+      flash.now[:alert] = "パスワードが違いますわよ…"
+      render :enter_password
+    end
+  end
+
 
   private
 
@@ -65,6 +83,15 @@ class NovelsController < ApplicationController
   end
 
   def novel_params
-    params.require(:novel).permit(:title, :body, :author_name, :font_choice, :status, :tag_list)
+    params.require(:novel).permit(
+      :title,
+      :author_name,
+      :body,
+      :font_choice,
+      :status,
+      :password,
+      :password_confirmation,
+      tag_ids: []  # もしタグを配列で受け取るなら
+    )
   end
 end

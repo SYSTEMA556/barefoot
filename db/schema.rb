@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_01_110316) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_04_121941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_01_110316) do
     t.string "font_choice"
     t.integer "bookmarks_count", default: 0, null: false
     t.integer "view_count", default: 0, null: false
+    t.string "password_digest"
     t.index ["user_id"], name: "index_novels_on_user_id"
   end
 

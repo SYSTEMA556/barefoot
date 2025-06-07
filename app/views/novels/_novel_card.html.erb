@@ -27,12 +27,7 @@
          <% if novel.respond_to?(:status) && novel.draft? %>
            <span class="badge text-bg-secondary mb-2">下書き</span>
          <% end %>
- 
-         <!-- 本文抜粋 -->
-         <p class="card-text small text-body flex-grow-1 lh-sm">
-           <%= truncate(novel.body, length: 100) %>
-         </p>
- 
+
          <!-- メタ情報 -->
          <div class="mt-2 text-wrap text-body-secondary small">
            <%= novel.published? ?

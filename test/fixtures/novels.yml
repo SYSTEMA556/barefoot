@@ -1,7 +1,16 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# test/fixtures/novels.yml
+
 first_novel:
   title: "私の最初の小説"
+  author_name: "初代作者"                            # author_name を必ず指定しますわ
   body: "むかしむかし…"
-  user: alice
+  font_choice: "MS明朝"                              # （任意ですが、モデルの inclusion バリデーションを満たすため）
+  password_digest: <%= BCrypt::Password.create("firstpass") %>  # パスワードも必須ですわ
+  user: alice                                       # もし users.yml に alice が定義されていれば紐づきますの
 
-
+one:
+  title: "テストフィクスチャ"
+  author_name: "フィクスチャ作者"
+  body: "fixture テスト本文"
+  font_choice: "MS明朝"
+  password_digest: <%= BCrypt::Password.create("fixturepass") %>

@@ -13,30 +13,51 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto text-center gap-2 px-2">
-        <!-- 共通リンク -->
+      <ul class="navbar-nav ms-auto align-items-center gap-2 px-2">
+        <!-- 新規投稿 -->
         <li class="nav-item">
           <%= link_to new_novel_path, class: 'nav-link py-2 px-3' do %>
             <i class="bi bi-journal-plus me-1"></i> 新規投稿
           <% end %>
         </li>
-  
-    
+
+        <!-- ドロップダウンリスト -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">ブックマーク</a></li>
+          </ul>
+        </li>
+
+        <!-- 検索バー -->
+        <li class="nav-item">
+          <form class="d-flex" role="search">
+        <%= render 'shared/search_novel_form' %>
+
+          </form>
+        </li>
+
+        <!-- ダークモード切り替え -->
+        <li class="nav-item">
+          <div class="form-check form-switch text-nowrap m-0">
+            <input class="form-check-input" type="checkbox" id="darkSwitch"
+                   <%= 'checked' if cookies[:bs_theme] == 'dark' %>>
+            <label class="form-check-label" for="darkSwitch">ダークモード</label>
+          </div>
+        </li>
       </ul>
-            <form class="d-flex ms-3 align-items-center">
-        <div class="form-check form-switch text-nowrap">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="darkSwitch"
-            <%= 'checked' if cookies[:bs_theme] == 'dark' %>
-          >
-          <label class="form-check-label" for="darkSwitch">ダークモード</label>
-        </div>
-      </form>
     </div>
   </div>
 </nav>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const switchEl = document.getElementById('darkSwitch');

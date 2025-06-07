@@ -1,56 +1,62 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
+  # Devise + Twitter OAuth 用
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
 
-  # ────────────────────────────────────────────────────────────────────────────────
- resources :users, only: [:show, :edit, :update] do
+  # ユーザー情報編集・確認メール用
+  resources :users, only: [:show, :edit, :update] do
     get :confirm_email, on: :collection
-    # アプリケーションのヘルスチェック用
+    # ヘルスチェック
     get "up" => "rails/health#show", as: :rails_health_check
   end
-  # トップページ：小説の一覧を表示
+
+  # トップページ：小説一覧
   root "novels#index"
-
-  # ─ Novel（作品）関連のルーティング ───────────────────────────────────────────
+get '/auth/:provider/callback', to: 'sessions#create'
+get '/auth/failure',            to: 'sessions#failure'
+delete '/logout',               to: 'sessions#destroy'
+  # ノベル関連
   resources :novels, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-    # 小説ごとのブックマーク（作成・解除）
-    #resources :bookmarks, only: [:create, :destroy]
-
-    # 小説詳細ページでトグル式にブックマークを切り替え
+    # パスワード認証用
     member do
-      post :toggle_bookmark   # POST /novels/:id/toggle_bookmark
+      get  :enter_password
+      post :verify_password
     end
 
-    # マイページやプレビュー用のカスタムアクション
+    # トグル式ブックマーク
+    member do
+      post :toggle_bookmark
+    end
+
+    # マイページ／プレビュー用
     collection do
-      get  :bookmarks         # GET  /novels/bookmarks  → NovelsController#bookmarks
-      get  :my_posts          # GET  /novels/my_posts   → NovelsController#my_posts
-      get  :drafts            # GET  /novels/drafts     → NovelsController#drafts
-      post :preview           # POST /novels/preview    → NovelsController#preview
+      get  :bookmarks    # /novels/bookmarks
+      get  :my_posts     # /novels/my_posts
+      get  :drafts       # /novels/drafts
+      post :preview      # /novels/preview
     end
 
-    # コメント機能のネスト（投稿前確認・削除確認付き）
-  resources :comments, only: [:create, :destroy] do
-    member do
-      post :confirm_delete
+    # コメント機能
+    resources :comments, only: [:create, :destroy] do
+      member do
+        post :confirm_delete
+        get  :verify_password
+      end
     end
-    member do
-      get :verify_password
-    end
-  end
-  end
-  # ────────────────────────────────────────────────────────────────────────────────
 
-  # ─ 全ユーザーのブックマーク一覧 ───────────────────────────────────────────────
+    # ── ここに追加 ──
+    # ノベルごとの Bookmark リソース（作成・解除）
+    resource :bookmark, only: [:create, :destroy]
+    # ─────────────
+  end
+
+  # 全ユーザーのブックマーク一覧
   resources :bookmarks, only: [:index]
-  # ────────────────────────────────────────────────────────────────────────────────
 
-  # ─ セッション／ユーザー関連 ───────────────────────────────────────────────────
-
- 
-  # ────────────────────────────────────────────────────────────────────────────────
-
-  # 開発環境限定：送信メールのプレビュー
+  # 開発環境限定：送信メールプレビュー
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end

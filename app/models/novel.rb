@@ -2,6 +2,8 @@ class Novel < ApplicationRecord
   belongs_to :user, optional: true
 
   enum status: { draft: 0, published: 1 }
+  has_secure_password validations: false  
+  validates :password, presence: true, on: :create
 
   validates :title,       presence: true
   validates :author_name, presence: true
@@ -69,6 +71,10 @@ class Novel < ApplicationRecord
       created_at
       updated_at
     ]
+  end
+
+  def password_required_for_edit?
+    password_digest.present?
   end
 
   def self.ransackable_associations(_auth = nil)

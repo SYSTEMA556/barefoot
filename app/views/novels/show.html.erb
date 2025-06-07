@@ -10,11 +10,25 @@
   when "Noto Serif JP"    then "font-noto-serif"
   else "font-default"
 end %>
-
+<div class="mb-3">
+  <% if user_signed_in? %>
+    <% if current_user.bookmarked_novels.exists?(@novel.id) %>
+      <%= button_to "♡ お気に入り解除", novel_bookmark_path(@novel),
+                    method: :delete,
+                    class: "btn btn-outline-danger btn-sm" %>
+    <% else %>
+      <%= button_to "♡ お気に入り登録", novel_bookmark_path(@novel),
+                    method: :post,
+                    class: "btn btn-outline-primary btn-sm" %>
+    <% end %>
+  <% else %>
+    <%= link_to "♡ ログインしてお気に入り登録", new_user_session_path,
+                 class: "btn btn-outline-secondary btn-sm" %>
+  <% end %>
+</div>
 <div class="<%= font_class %>">
-
+  <!-- タイトルと投稿者情報 -->
   <h1 class="mb-2"><%= @novel.title %></h1>
-
   <p>
     投稿者:
     <% if @novel.user.present? %>
@@ -24,6 +38,11 @@ end %>
     <% end %>
   </p>
 
+  <%# ======= ここから「パスワード（編集リンク）」を追加 ======= %>
+  <div class="edit-password-link mb-4">
+    <%= link_to "🔒 編集する（パスワード）", enter_password_novel_path(@novel), class: "btn btn-sm btn-outline-primary" %>
+  </div>
+  <%# ======================================================== %>
 
   <!-- 本文 -->
   <div class="novel-body mb-5">
