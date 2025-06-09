@@ -73,8 +73,20 @@ Rails.application.configure do
   # ログレベルは環境変数かデフォルトで info
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info").to_sym
 
-  # 本番用キャッシュストア（必要に応じて）
-  # config.cache_store = :mem_cache_store
+  # キャッシュストア設定を Redis に
+  config.cache_store = :redis_cache_store, {
+    url: ENV['REDIS_URL'],                     # 接続先を環境変数から取得
+    namespace: 'myapp-cache',                  # キーの衝突を防ぐ名前空間
+    expires_in: 1.hour,                        # デフォルトの有効期限を１時間に
+    reconnect_attempts: 1,                     # 再接続試行回数
+    pool_size: ENV.fetch("RAILS_MAX_THREADS") { 5 },  # プールサイズ（スレッド数に合わせて）
+    pool_timeout: 5,                           # 接続が空くのを待つ秒数
+   # driver: :hiredis,                          # 高速ドライバ指定
+    error_handler: ->(error:, call:, instance:) {
+      # 障害発生時にログへ出力
+      Rails.logger.error "Redis cache error: #{error.class} – #{error.message}"
+    }
+  }
 
   # Active Job 用キューアダプタ設定（必要に応じて）
   # config.active_job.queue_adapter     = :sidekiq

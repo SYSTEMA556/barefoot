@@ -7,30 +7,29 @@ gem "rails", "~> 7.1.5", ">= 7.1.5.1"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
-gem 'kaminari'
-gem 'bootstrap5-kaminari-views'
 
+
+gem 'will_paginate-bootstrap5'
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 
-gem "kaminari" 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
+gem 'will_paginate'
+gem 'will_paginate-bootstrap5'
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
-gem 'will_paginate', '~> 3.3'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-
 # Use Redis adapter to run Action Cable in production
-# gem "redis", ">= 4.0.1"
+gem "redis", ">= 4.0.1"
 gem 'bcrypt', '~> 3.1.7'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
  gem "faker"

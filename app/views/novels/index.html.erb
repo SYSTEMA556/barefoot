@@ -24,13 +24,12 @@
 </form>
    
           <!-- 上部ページネーション -->
-          <% if defined?(paginate) %>
-            <nav aria-label="ページネーション" class="mt-4">
-              <div class="d-flex justify-content-center">
-                <%= paginate @novels, theme: 'bootstrap-5' %>
-              </div>
-            </nav>
-          <% end %>
+  <!-- 上部ページネーション（will_paginate 用） -->
+<nav aria-label="ページネーション" class="mt-4">
+  <div class="d-flex justify-content-center">
+    <%= will_paginate @novels %>
+  </div>
+</nav>
 
     <!-- 📚 作品カード一覧 -->
     <section>
@@ -88,14 +87,12 @@
         <% end %>
       </div>
 
-      <!-- 下部ページネーション -->
-      <% if defined?(paginate) %>
-        <nav aria-label="ページネーション" class="mt-4">
-          <div class="d-flex justify-content-center">
-            <%= paginate @novels, theme: 'bootstrap-5' %>
-          </div>
-        </nav>
-      <% end %>
+   <!-- 下部ページネーション（will_paginate 用） -->
+<nav aria-label="ページネーション" class="mt-4">
+  <div class="d-flex justify-content-center">
+    <%= will_paginate @novels %>
+  </div>
+</nav>
     </section>
 
   </div>

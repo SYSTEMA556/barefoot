@@ -4,27 +4,70 @@ class NovelsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:preview]
 
   def index
-    # Ransack で検索オブジェクトを生成
     @q = Novel.ransack(params[:q])
 
-    # ベースクエリ：検索結果に関連レコードを事前ロード
-    base = @q.result(distinct: true).includes(:user, :tags)
+    # キャッシュキーの定義（お忘れなく♡）
+    q_hash        = params[:q]&.to_unsafe_h || {}
+    query_segment = q_hash.sort.map { |k, v| "#{k}=#{v}" }.join("&")
+    cache_key     = [
+      "novels/index",
+      query_segment.present? ? query_segment : "no_query",
+      params[:sort] || 'default',
+      "page:#{params[:page] || 1}"
+    ].join("/")
 
-    # sort パラメータに応じてスコープを適用
-    @novels = case params[:sort]
-              when 'comments'
-                base.order_by_comments
-              when 'views'
-                base.order_by_views
-              when 'updated_at'
-                base.order_by_updated
-              else
-                base.order(created_at: :desc)
-              end
+    page     = (params[:page] || 1).to_i
+    per_page = 10
 
-    # ページネーション（will_paginate を想定）
-    @novels = @novels.paginate(page: params[:page], per_page: 10)
+    # ── キャッシュにハッシュを返す ───────────────────────────
+  cache_data = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
+
+
+  Rails.logger.info "★ Cache MISS: #{cache_key}"
+
+  # ① 検索結果のRelationを取得
+  base   = @q.result(distinct: true).includes(:user, :tags)
+
+  # ② ソートを適用
+  sorted = case params[:sort]
+           when 'comments'   then base.order_by_comments
+           when 'views'      then base.order_by_views
+           when 'updated_at' then base.order_by_updated
+           else                  base.order(created_at: :desc)
+           end
+
+  # ③ ページネーションして配列化
+  paginated = sorted.paginate(page: page, per_page: per_page)
+
+  # ④ コメント数をまとめて取得
+  counts = Comment.where(novel_id: paginated.map(&:id))
+                  .group(:novel_id)
+                  .count
+
+  {
+    novels:         paginated.to_a,
+    total_entries:  paginated.total_entries,
+    comment_counts: counts
+  }
+end
+  @comment_counts = cache_data[:comment_counts]
+# 再構築後…
+@novels = WillPaginate::Collection.create(page, per_page, cache_data[:total_entries]) do |pager|
+  pager.replace(cache_data[:novels])
+end
+if Rails.cache.exist?(cache_key)
+  Rails.logger.info "★ Cache HIT: #{cache_key}"
+end
+    # ── ハッシュから取り出して WillPaginate::Collection を再構築 ──
+    novels_array   = cache_data[:novels]
+    total_entries  = cache_data[:total_entries]
+
+    @novels = WillPaginate::Collection.create(page, per_page, total_entries) do |pager|
+      pager.replace(novels_array)
+    end
   end
+
+
   def preview
     @novel          = Novel.new(novel_params)
     @preview_params = novel_params
