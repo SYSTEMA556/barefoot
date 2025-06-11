@@ -3,10 +3,10 @@
 Rails.application.routes.draw do
   devise_for :models
   # Devise + Twitter OAuth 用
-  devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks'
-  }
-
+ # devise_for :users, controllers: {
+ #   omniauth_callbacks: 'users/omniauth_callbacks'
+ # }
+  devise_for :users
   # ユーザー情報編集・確認メール用
   resources :users, only: [:show, :edit, :update] do
     get :confirm_email, on: :collection
@@ -16,9 +16,11 @@ Rails.application.routes.draw do
 
   # トップページ：小説一覧
   root "novels#index"
-get '/auth/:provider/callback', to: 'sessions#create'
-get '/auth/failure',            to: 'sessions#failure'
-delete '/logout',               to: 'sessions#destroy'
+ #  get '/auth/:provider/callback', to: 'sessions#create'
+  # get '/auth/failure',            to: 'sessions#failure'
+  get    'logout/confirm', to: 'pages#logout', as: :logout_confirm
+
+#delete '/logout', to: 'devise/sessions#destroy', as: :logout
   # ノベル関連
   resources :novels, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     # パスワード認証用
@@ -56,7 +58,9 @@ delete '/logout',               to: 'sessions#destroy'
 
   # 全ユーザーのブックマーク一覧
   resources :bookmarks, only: [:index]
+ # get 'logout', to: 'pages#logout', as: :logout
 
+  # Devise のサインアウトは DELETE だから、ボタンで飛ばすの
   # 開発環境限定：送信メールプレビュー
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"

@@ -60,9 +60,9 @@ group :development do
   gem "letter_opener_web"
   gem 'rails-i18n', '~> 7.0' 
   gem 'ransack'
- gem 'omniauth-twitter2'
+# gem 'omniauth-twitter2'
 gem 'devise'                        # ユーザー認証の定番ライブラリ
-gem 'omniauth'                      # OmniAuth 基本ライブラリ
+#gem 'omniauth'                      # OmniAuth 基本ライブラリ
 #メッセージ表示
 # Gemfile
   gem 'devise-i18n'  # Devise のビルトインメッセージを多言語化:contentReference[oaicite:4]{index=4}

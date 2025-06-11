@@ -3,6 +3,8 @@
 class BookmarksController < ApplicationController
   # ── ログイン必須 ───────────────────────────────────────────
 before_action :authenticate_user!
+  before_action :set_search, only: [:index]  # ← 追加！
+
   # ── 小説取得は create/destroy 時のみ ─────────────────────────
   before_action :set_novel, only: [:create, :destroy]
   # （index は novel 単体じゃなくユーザー全体の一覧なので不要）
@@ -14,7 +16,7 @@ before_action :authenticate_user!
                           .includes(:user)
                           .order('bookmarks.created_at DESC')
                           .page(params[:page])
-                          .per(20)
+                          .per(50)
   end
 
   # POST /novels/:novel_id/bookmarks

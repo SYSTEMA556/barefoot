@@ -3,8 +3,7 @@ class User < ApplicationRecord
   # ───────────────── Devise ───────────────────
   # :confirmable を入れると Devise 流のメール確認が有効になる
    devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:twitter2]
+         :recoverable, :rememberable, :validatable
 
   def self.from_omniauth(auth)
     # 既存ユーザーをUIDで検索し、なければ作成

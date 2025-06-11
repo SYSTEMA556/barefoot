@@ -9,7 +9,8 @@ class NovelsController < ApplicationController
 
     #★ ページ番号と件数をローカル変数に  
     page     = (params[:page] || 1).to_i
-    per_page = 10
+    per_page = 50
+  
 
     #★ キャッシュキーをここで定義しないと NameError になるの  
     q_hash        = params[:q]&.to_unsafe_h || {}
@@ -26,7 +27,8 @@ class NovelsController < ApplicationController
       Rails.logger.info "★ Cache MISS: #{cache_key}"
 
       # ① 検索結果の Relation を取得  
-      base = @q.result(distinct: true).includes(:user, :tags)
+      base = @q.result(distinct: true).includes(:user, :tags).where(status: :published)
+
 
       # ② ソートを適用  
       sorted = case params[:sort]

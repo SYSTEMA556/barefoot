@@ -1,0 +1,5 @@
+<div class="container mt-5 text-center">
+  <h1>ログアウト</h1>
+  <p>本当にログアウトしますか？</p>
+<%= button_to "ログアウトする", destroy_user_session_path,
+                 method: :delete, class: "btn btn-danger" %>

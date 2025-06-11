@@ -1,9 +1,9 @@
 <!-- app/views/shared/_search_novel_form.html.erb -->
-<%= search_form_for @q,
+<%= search_form_for(@q || Novel.ransack(params[:q]),
                     url: novels_path,
                     method: :get,
                     local: true,
-                    html: { class: 'd-flex align-items-center mb-4' } do |f| %>
+                    html: { class: 'd-flex align-items-center mb-4' }) do |f| %>
 
   <!-- メインの検索フィールド -->
   <%= f.search_field :title_or_author_name_or_tags_name_cont,

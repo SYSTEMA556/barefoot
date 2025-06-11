@@ -87,7 +87,11 @@
         <% end %>
       </div>
 
-
+<nav aria-label="ページネーション" class="mt-4">
+  <div class="d-flex justify-content-center">
+<%= paginate @novels, theme: 'bootstrap-5' %>
+  </div>
+</nav>
     </section>
 
   </div>
