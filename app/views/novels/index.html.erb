@@ -49,10 +49,10 @@
                   <!-- 作者 -->
                   <div class="card-subtitle mb-2 text-muted small">
                     <% if novel.user %>
-                      <span class="badge bg-primary me-1">会員</span>
+                       <!--<span class="badge bg-primary me-1">会員</span> -->
                       <%= novel.user.user_name %>
                     <% elsif novel.author_name.present? %>
-                      <span class="badge bg-secondary me-1">ゲスト</span>
+                       <!--   <span class="badge bg-secondary me-1">ゲスト</span> -->
                       <%= h(novel.author_name) %>
                     <% else %>
                       <em class="text-muted">作者不明</em>
