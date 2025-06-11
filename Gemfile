@@ -9,7 +9,6 @@ gem "rails", "~> 7.1.5", ">= 7.1.5.1"
 gem "sprockets-rails"
 
 
-gem 'will_paginate-bootstrap5'
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
@@ -21,8 +20,11 @@ gem "importmap-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
-gem 'will_paginate'
-gem 'will_paginate-bootstrap5'
+#gem 'will_paginate'
+#gem 'will_paginate-bootstrap5' #ページネーションでpagenateするとバグる
+gem 'kaminari'  
+
+   gem 'bootstrap5-kaminari-views'
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"

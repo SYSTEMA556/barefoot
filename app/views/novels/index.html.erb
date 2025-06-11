@@ -27,7 +27,7 @@
   <!-- 上部ページネーション（will_paginate 用） -->
 <nav aria-label="ページネーション" class="mt-4">
   <div class="d-flex justify-content-center">
-    <%= will_paginate @novels %>
+<%= paginate @novels, theme: 'bootstrap-5' %>
   </div>
 </nav>
 
@@ -87,12 +87,7 @@
         <% end %>
       </div>
 
-   <!-- 下部ページネーション（will_paginate 用） -->
-<nav aria-label="ページネーション" class="mt-4">
-  <div class="d-flex justify-content-center">
-    <%= will_paginate @novels %>
-  </div>
-</nav>
+
     </section>
 
   </div>

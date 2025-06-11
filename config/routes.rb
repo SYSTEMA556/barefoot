@@ -1,6 +1,7 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
+  devise_for :models
   # Devise + Twitter OAuth 用
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
