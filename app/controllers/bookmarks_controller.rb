@@ -1,22 +1,20 @@
-# app/controllers/bookmarks_controller.rb
-
 class BookmarksController < ApplicationController
   # ── ログイン必須 ───────────────────────────────────────────
-before_action :authenticate_user!
-  before_action :set_search, only: [:index]  # ← 追加！
+  before_action :authenticate_user!
+  before_action :set_search, only: [:index]
 
   # ── 小説取得は create/destroy 時のみ ─────────────────────────
   before_action :set_novel, only: [:create, :destroy]
-  # （index は novel 単体じゃなくユーザー全体の一覧なので不要）
 
   # GET /bookmarks
   def index
-    @bookmarked_novels = current_user
-                          .bookmarked_novels
-                          .includes(:user)
-                          .order('bookmarks.created_at DESC')
-                          .page(params[:page])
-                          .per(50)
+    # set_searchで @q を用意しているから、resultを使って絞り込み
+    @bookmarked_novels = @q
+      .result
+      .includes(:user)
+      .order('bookmarks.created_at DESC')
+      .page(params[:page])
+      .per(50)
   end
 
   # POST /novels/:novel_id/bookmarks
@@ -36,5 +34,10 @@ before_action :authenticate_user!
   # novels/:novel_id を取得
   def set_novel
     @novel = Novel.find(params[:novel_id])
+  end
+
+  # ブックマーク済み小説に対する検索オブジェクトを作成
+  def set_search
+    @q = current_user.bookmarked_novels.ransack(params[:q])
   end
 end
