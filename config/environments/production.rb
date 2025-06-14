@@ -75,18 +75,8 @@ Rails.application.configure do
 
   # キャッシュストア設定を Redis に
   
-config.cache_store = :redis_cache_store, {
-  url: ENV['REDIS_URL'],
-  namespace: 'myapp-cache',
-  expires_in: 1.hour,
-  reconnect_attempts: 1,
-  pool_size:      ENV.fetch("RAILS_MAX_THREADS") { 5 },
-  pool_timeout:   5,
-  error_handler: ->(method:, returning:, exception:) do
-    # 例外オブジェクトは `exception` キーワードで渡されますの
-    Rails.logger.error "Redis cache error: #{exception.class} – #{exception.message}"
-  end
-}
+config.cache_store = :memory_store, { size: 64.megabytes }
+
      # Rails.logger.error "Redis cache error: #{error.class} – #{error.message}"
   
 
