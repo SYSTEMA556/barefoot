@@ -82,7 +82,11 @@ Rails.application.configure do
     pool_size: ENV.fetch("RAILS_MAX_THREADS") { 5 },  # プールサイズ（スレッド数に合わせて）
     pool_timeout: 5,                           # 接続が空くのを待つ秒数
    # driver: :hiredis,                          # 高速ドライバ指定
-    error_handler: ->(error:, call:, instance:) {
+      #error_handler: ->(error:, call:, instance:) {
+  error_handler: ->(**args) {
+    e = args[:error]
+    Rails.logger.error "Redis cache error: #{e.class} – #{e.message}"
+  }
       # 障害発生時にログへ出力
       Rails.logger.error "Redis cache error: #{error.class} – #{error.message}"
     }
