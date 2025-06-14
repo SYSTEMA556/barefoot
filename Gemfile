@@ -23,7 +23,7 @@ gem "turbo-rails"
 #gem 'will_paginate'
 #gem 'will_paginate-bootstrap5' #ページネーションでpagenateするとバグる
 gem 'kaminari'  
-
+gem 'devise'   
    gem 'bootstrap5-kaminari-views'
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
@@ -61,7 +61,7 @@ group :development do
   gem 'rails-i18n', '~> 7.0' 
   gem 'ransack'
 # gem 'omniauth-twitter2'
-gem 'devise'                        # ユーザー認証の定番ライブラリ
+                      # ユーザー認証の定番ライブラリ
 #gem 'omniauth'                      # OmniAuth 基本ライブラリ
 #メッセージ表示
 # Gemfile
