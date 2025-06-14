@@ -87,10 +87,10 @@ Rails.application.configure do
     e = args[:error]
     Rails.logger.error "Redis cache error: #{e.class} – #{e.message}"
   }
-      # 障害発生時にログへ出力
+# 障害発生時にログへ出力
      # Rails.logger.error "Redis cache error: #{error.class} – #{error.message}"
   
-  #}
+}
 
   # Active Job 用キューアダプタ設定（必要に応じて）
   # config.active_job.queue_adapter     = :sidekiq
