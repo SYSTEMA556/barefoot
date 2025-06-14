@@ -34,7 +34,7 @@ gem "bootstrap5-kaminari-views"
 
 # API & JSON
 gem "jbuilder"
-
+  gem "ransack"
 # Caching & performance
 gem "redis", ">= 4.0.1"
 gem "bootsnap", require: false
@@ -64,7 +64,7 @@ group :development do
   gem "letter_opener", "~> 1.10"
   gem "letter_opener_web"
   gem "rails-i18n", "~> 7.0"
-  gem "ransack"
+
 end
 
 # Spring speeds up development
