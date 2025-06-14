@@ -26,7 +26,7 @@ gem "sassc-rails"
 # Authentication & admin
 gem "devise"
 gem "devise-i18n"
-gem "activeadmin"
+#gem "activeadmin"
 
 # Pagination
 gem "kaminari"
