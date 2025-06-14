@@ -60,10 +60,10 @@ class Novel < ApplicationRecord
   }
 
     # 本⽂の単語数を計算する ransacker
-  ransacker :word_count do
+  #ransacker :word_count do
     # 空白で区切られた単語数
-    Arel.sql("LENGTH(body) - LENGTH(REPLACE(body, ' ', '')) + 1")
-  end
+ #   Arel.sql("LENGTH(body) - LENGTH(REPLACE(body, ' ', '')) + 1")
+ # end
   # updated_at を使って更新日時 DESC ソート
   scope :order_by_updated, -> {
     order(updated_at: :desc)
