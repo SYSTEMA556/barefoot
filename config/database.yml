@@ -1,22 +1,16 @@
-# PostgreSQL. Versions 9.3 and up are supported.
-# https://guides.rubyonrails.org/configuring.html#configuring-a-database
-#
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
-  timeout: 5000
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>  # ← 数値！
+  timeout: 5000                                   # ← フラットに書く！
 
 development:
   <<: *default
   database: novel_mvp_development
+  username: postgres
+  password: password     # ← 上で設定したもの
+  host: localhost
 
-test:
-  <<: *default
-  database: novel_mvp_test
-
-# --- 本番環境 ------------------------------------------------------
 production:
   <<: *default
-  # Render/Postgres の接続 URL を環境変数で注入する
-  url: <%= ENV.fetch("DATABASE_URL") %>
+  url: <%= ENV["DATABASE_URL"] %>
