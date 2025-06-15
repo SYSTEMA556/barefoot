@@ -3,8 +3,8 @@ services:
     name: novel-mvp-web
     runtime: ruby
     plan: free
-    buildCommand: "./bin/render-build.sh"
-    releaseCommand: "bundle exec rails db:migrate"    # ここは一つだけ！
+    buildCommand: "bundle install; bundle exec rake assets:precompile; bundle exec rake assets:clean;"
+    releaseCommand: "bundle exec rails db:migrate"
     startCommand: "bundle exec puma -C config/puma.rb -t 5:5 -p ${PORT:-3000}"
     envVars:
       - key: DATABASE_URL
