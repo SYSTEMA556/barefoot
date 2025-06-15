@@ -1,7 +1,6 @@
 class CreateStructureFromSchema < ActiveRecord::Migration[7.1]
   def change
     enable_extension "plpgsql"
-
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
