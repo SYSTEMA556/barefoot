@@ -78,10 +78,13 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+#production:
+ # <<: *default
+  #database: novel_mvp_production
+#  username: your_pg_user
+#  password: <%= ENV['PG_PASSWORD'] %>
+#  host:     localhost   # or your DB host
+#  port:     5432
 production:
   <<: *default
-  database: novel_mvp_production
-  username: your_pg_user
-  password: <%= ENV['PG_PASSWORD'] %>
-  host:     localhost   # or your DB host
-  port:     5432
+  url: <%= ENV.fetch("DATABASE_URL") %>
