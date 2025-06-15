@@ -4,8 +4,7 @@ services:
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
-    releaseCommand: "./bin/render-build.sh"       # ← ここに書くの！
-    releaseCommand: "bundle exec rails db:migrate"
+    releaseCommand: "bundle exec rails db:migrate"    # ここは一つだけ！
     startCommand: "bundle exec puma -C config/puma.rb -t 5:5 -p ${PORT:-3000}"
     envVars:
       - key: DATABASE_URL
