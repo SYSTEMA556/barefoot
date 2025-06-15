@@ -3,16 +3,36 @@ services:
     name: barefoot
     runtime: ruby
     plan: free
-    buildCommand: "bundle install; bundle exec rake assets:precompile; bundle exec rake assets:clean;"
-    releaseCommand: "bundle exec rails db:migrate"
-    startCommand: "bundle exec puma -C config/puma.rb -t 5:5 -p ${PORT:-3000}"
+
+    # ── ビルド時 ─────────────────────────
+    buildCommand: |
+      bundle install
+      bundle exec rake assets:precompile
+      bundle exec rake assets:clean
+
+    # ── デプロイ直前：本番 DB へ migrate ───
+    releaseCommand: bundle exec rails db:migrate
+    # ※ releaseCommand で十分。preDeployCommand は削除して OK
+
+    # ── 実行 ────────────────────────────
+    startCommand: bundle exec puma -C config/puma.rb -t 5:5 -p ${PORT:-3000}
+
     envVars:
+      # ★★ 本番環境を明示 ★★
+      - key: RAILS_ENV
+        value: production
+
+      # DB 接続文字列は Render が自動生成
       - key: DATABASE_URL
         fromDatabase:
           name: novel-mvp-db
           property: connectionString
+
+      # Rails マスターキーは手元の credentials をコピー
       - key: RAILS_MASTER_KEY
         sync: false
+
+      # Redis（任意）
       - key: REDIS_URL
         fromService:
           type: redis
