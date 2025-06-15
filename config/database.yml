@@ -85,6 +85,4 @@ test:
 #  password: <%= ENV['PG_PASSWORD'] %>
 #  host:     localhost   # or your DB host
 #  port:     5432
-production:
-  <<: *default
-  url: <%= ENV.fetch("DATABASE_URL") %>
+url: <%= ENV["DATABASE_URL"] || 'postgres://localhost/default_db' %>
