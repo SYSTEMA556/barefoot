@@ -4,7 +4,7 @@ puts 'Seeding novels only...'
 
 if defined?(Faker)
   # Faker があるなら 8,000 件のランダム小説を作成
-  8_000.times do |i|
+  80.times do |i|
     title       = Faker::Book.title
     author_name = Faker::Name.name
     body        = Faker::Lorem.paragraph(sentence_count: 5)
@@ -22,11 +22,11 @@ if defined?(Faker)
     )
 
     # ログはインターバルを置かないと見づらいので、1000件ごとにだけ出す
-    puts "Created #{i+1}/8000 novels..." if (i + 1) % 1_000 == 0
+    puts "Created #{i+1}/8000 novels..." if (i + 1) % 10 == 0
   end
 else
   # Faker がない場合は固定パターンで 8,000 件作成
-  8_000.times do |i|
+  80.times do |i|
     idx = i % 6
     title       = "ダミー小説#{i + 1}"
     author_name = "ダミー作者#{i + 1}"
@@ -44,7 +44,7 @@ else
       status:               (i.even? ? "draft" : "published")
     )
 
-    puts "Created dummy novel #{i+1}/8000..." if (i + 1) % 1_000 == 0
+    puts "Created dummy novel #{i+1}/80..." if (i + 1) % 1_000 == 0
   end
 end
 
