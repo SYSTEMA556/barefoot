@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
-  # Deviseや認証のコールバックは一切なし
-  # 必要であれば他の共通処理やヘルパーメソッドをここに書きますの。
+ before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # 例：publically accessible にしたい場合は何も書かなくてOK
+  protected
+  def configure_permitted_parameters
+    attrs = %i[user_name email password password_confirmation]
+    devise_parameter_sanitizer.permit :sign_up,        keys: attrs
+    devise_parameter_sanitizer.permit :account_update, keys: attrs
+  end
 end

@@ -2,7 +2,7 @@
      data-bs-theme="<%= cookies[:bs_theme] || 'body' %>"
      id="mainNavbar">
   <div class="container-fluid">
-    <%= link_to 'Novel site name', root_path, class: 'navbar-brand' %>
+    <%= link_to '東方夜伽話', root_path, class: 'navbar-brand' %>
 
     <!-- ハンバーガー -->
     <button class="navbar-toggler" type="button"
@@ -26,7 +26,7 @@
   <a class="nav-link dropdown-toggle" href="#" role="button"
      data-bs-toggle="dropdown" aria-expanded="false">
     <% if user_signed_in? %>
-      <%= current_user.email %>
+      <%= current_user.user_name %>
     <% else %>
       アカウント
     <% end %>
