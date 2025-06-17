@@ -19,7 +19,8 @@ Rails.application.routes.draw do
  #  get '/auth/:provider/callback', to: 'sessions#create'
   # get '/auth/failure',            to: 'sessions#failure'
   get    'logout/confirm', to: 'pages#logout', as: :logout_confirm
-
+  get  "/gate",  to: "age_gate#new"    # フォーム
+  post "/gate",  to: "age_gate#create" # 同意処理
 #delete '/logout', to: 'devise/sessions#destroy', as: :logout
   # ノベル関連
   resources :novels, only: [:index, :show, :new, :create, :edit, :update, :destroy] do

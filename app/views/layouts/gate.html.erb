@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="<%= cookies[:theme] || 'light' %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Age Gate | Scarlet Library</title>
+
+  <!-- Bootstrap or your Tailwind import -->
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+</head>
+<body class="d-flex align-items-center justify-content-center" style="min-height:100vh;">
+  <%= yield %>
+</body>
+</html>
