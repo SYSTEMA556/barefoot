@@ -1,72 +1,66 @@
 class NovelsController < ApplicationController
-  before_action :set_novel, only: [:show, :enter_password, :edit, :update, :destroy]
+  before_action :set_novel, only: [:show, :enter_password, :verify_password,:edit, :update, :destroy]
   before_action :set_search, only: [:index, :show, :new, :edit, :create, :update, :destroy, :preview]
   skip_before_action :verify_authenticity_token, only: [:preview]
 
   def index
-    #★ Ransack で検索オブジェクトを生成  
-    @q = Novel.ransack(params[:q])
-
-    #★ ページ番号と件数をローカル変数に  
-    page     = (params[:page] || 1).to_i
-    per_page = 50
+  @q = Novel.ransack(params[:q])
+  page     = (params[:page] || 1).to_i
+  per_page = 50
   
 
     #★ キャッシュキーをここで定義しないと NameError になるの  
-    q_hash        = params[:q]&.to_unsafe_h || {}
-    query_segment = q_hash.sort.map { |k, v| "#{k}=#{v}" }.join("&")
-    cache_key = [
-      "novels/index",
-      query_segment.present? ? query_segment : "no_query",
-      params[:sort] || 'default',
-      "page:#{page}"
-    ].join("/")
+    q_hash = params[:q]&.to_unsafe_h || {}
+  query_segment = q_hash.sort.map { |k, v| "#{k}=#{v}" }.join("&")
+  cache_key = [
+    "novels/index",
+    query_segment.present? ? query_segment : "no_query",
+    params[:sort] || 'default',
+    "page:#{page}"
+  ].join("/")
 
-    #★ キャッシュ FETCH／MISS 処理  
-    cache_data = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
-      Rails.logger.info "★ Cache MISS: #{cache_key}"
+  cache_data = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
+    Rails.logger.info "★ Cache MISS: #{cache_key}"
 
       # ① 検索結果の Relation を取得  
-      base = @q.result(distinct: true).includes(:user, :tags).where(status: :published)
+    base = @q.result(distinct: true).includes(:user, :tags)
 
+    sorted = case params[:sort]
+             when 'comments'
+               base.left_joins(:comments)
+                   .group('novels.id')
+                   .order('COUNT(comments.id) DESC, novels.created_at DESC')
+             when 'views'
+               base.order(view_count: :desc, created_at: :desc)
+             when 'updated_at'
+               base.order(updated_at: :desc)
+             else
+               base.order(created_at: :desc)
+             end
 
-      # ② ソートを適用  
-      sorted = case params[:sort]
-               when 'comments'   then base.left_joins(:comments)
-                                           .group('novels.id')
-                                           .order('COUNT(comments.id) DESC, novels.created_at DESC')
-               when 'views'      then base.order(view_count: :desc, created_at: :desc)
-               when 'updated_at' then base.order(updated_at: :desc)
-               else                  base.order(created_at: :desc)
-               end
+    paginated = sorted.page(page).per(per_page)
+    counts = Comment.where(novel_id: paginated.map(&:id))
+                    .group(:novel_id)
+                    .count
 
-      # ③ Kaminari でページネーション  
-      paginated = sorted.page(page).per(per_page)
+    {
+      novels: paginated.to_a,
+      total_count: paginated.total_count,
+      comment_counts: counts
+    }
+  end
 
-      # ④ コメント数をまとめて取得  
-      counts = Comment.where(novel_id: paginated.map(&:id))
-                      .group(:novel_id)
-                      .count
+  Rails.logger.info "★ Cache HIT: #{cache_key}" if Rails.cache.exist?(cache_key)
 
-      {
-        novels:      paginated.to_a,
-        total_count: paginated.total_count,
-        comment_counts: counts
-      }
-    end
-
-    #★ キャッシュ HIT ログ  
-    Rails.logger.info "★ Cache HIT: #{cache_key}" if Rails.cache.exist?(cache_key)
 
     #★ Kaminari の配列ページネーションに復元  
-    @novels = Kaminari.paginate_array(
-      cache_data[:novels],
-      total_count: cache_data[:total_count]
-    ).page(page).per(per_page)
+  @novels = Kaminari.paginate_array(
+    cache_data[:novels],
+    total_count: cache_data[:total_count]
+  ).page(page).per(per_page)
 
-    #★ ビューで使うコメント数ハッシュ  
-    @comment_counts = cache_data[:comment_counts]
-  end
+  @comment_counts = cache_data[:comment_counts]
+end
 
   def preview
     @novel          = Novel.new(novel_params)
@@ -74,9 +68,20 @@ class NovelsController < ApplicationController
     render :preview
   end
 
-  def show
-    # @novel は set_novel で既に取得済み
+
+def show
+  # ✅ 二重取得を削除
+  if @novel.caution? && !cookies["novel_read_#{@novel.id}"]
+    render :caution and return
   end
+end
+
+def confirm_caution
+  @novel = Novel.find(params[:id])
+  cookies["novel_read_#{@novel.id}"] = true
+  redirect_to novel_path(@novel)
+end
+
 
   def new
     @novel = Novel.new
@@ -133,16 +138,17 @@ class NovelsController < ApplicationController
     @novel = Novel.find(params[:id])
   end
 
-  def novel_params
-    params.require(:novel).permit(
-      :title,
-      :author_name,
-      :body,
-      :font_choice,
-      :status,
-      :password,
-      :password_confirmation,
-      tag_ids: []  # もしタグを配列で受け取るなら
-    )
-  end
+ def novel_params
+  params.require(:novel).permit(
+    :title,
+    :author_name,
+    :body,
+    :password,
+    :password_confirmation,
+    :font_choice,
+    :caution,
+    :caution_reason,
+    :tag_list # acts-as-taggable-on を使っているならこれも
+  )
+end
 end

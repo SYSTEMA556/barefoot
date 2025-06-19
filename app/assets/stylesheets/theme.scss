@@ -1,0 +1,26 @@
+/* app/assets/stylesheets/theme.scss */
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --link: #007bff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --fg: #ffffff;
+    --link: #6ab0ff;
+  }
+}
+
+[data-theme="dark"] {
+  --bg: #000000;
+  --fg: #ffffff;
+  --link: #6ab0ff;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+a { color: var(--link); }

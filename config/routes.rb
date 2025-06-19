@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     member do
       get  :enter_password
       post :verify_password
+     post :confirm_caution  # /novels/:id/confirm_caution
     end
 
     # トグル式ブックマーク

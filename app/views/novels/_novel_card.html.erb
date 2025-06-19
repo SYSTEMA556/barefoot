@@ -30,7 +30,6 @@
 
          <!-- メタ情報 -->
          <div class="mt-2 text-wrap text-body-secondary small">
-           <%= novel.published? ?
                "投稿日：" + l(novel.created_at, format: :custom_ja) :
                "更新日：" + l(novel.updated_at, format: :short) %>
          </div>

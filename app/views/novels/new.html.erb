@@ -3,6 +3,15 @@
 <div class="container-fluid my-4">
   <div class="row">
     <!-- フォームカラム -->
+    <% if @novel.errors.any? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% @novel.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
     <div class="col-md-8">
       <%= form_with model: @novel, url: novels_path, local: true, html: { id: 'novel-form' } do |f| %>
       <%= f.hidden_field :preview_mode, value: 'false', id: 'preview-mode-field' %>
@@ -32,7 +41,7 @@
       作品を編集するときに必要になりますので、忘れないようにしてくださいませ。
     </div>
   </div>
-
+ 
   <!-- パスワード確認（必須） -->
   <div class="mb-3">
     <%= f.label :password_confirmation, "パスワード（確認用）", class: "form-label" %>
@@ -52,6 +61,14 @@
              ],
              {}, class: 'form-select' %>
         </div>
+        <div class="mb-3">
+ <%= f.check_box :caution, id: "novel_caution", data: { controller: "toggle", toggle_target: "checkbox" } %>
+<%= f.label :caution, "⚠️ 注意喚起をつける", class: "form-check-label" %>
+
+<div id="caution-reason-field" >
+  <%= f.label :caution_reason, "注意理由（閲覧前に表示されます）" %>
+  <%= f.text_area :caution_reason, rows: 3, class: "form-control", placeholder: "例: グロテスクな描写があります" %>
+</div>
         <!-- 送信ボタン -->
        <div class="mb-3 d-flex gap-2">
         <%= button_tag 'プレビュー', type: 'submit', class: 'btn btn-secondary',

@@ -6,6 +6,6 @@ class TagsController < ApplicationController
 
   def show
     @tag = params[:id]
-    @novels = Novel.published.tagged_with(@tag).page(params[:page]).per(20)
+    @novels = Novel.tagged_with(@tag).page(params[:page]).per(20)
   end
 end

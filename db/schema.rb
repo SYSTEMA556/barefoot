@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_16_125829) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_19_124255) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,11 +89,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_16_125829) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "author_name"
-    t.integer "status", default: 1
     t.string "font_choice"
     t.integer "bookmarks_count", default: 0, null: false
     t.integer "view_count", default: 0, null: false
     t.string "password_digest"
+    t.boolean "caution"
+    t.text "caution_reason"
     t.index ["user_id"], name: "index_novels_on_user_id"
   end
 

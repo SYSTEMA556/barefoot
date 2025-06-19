@@ -1,0 +1,7 @@
+<div class="alert alert-warning">
+  <h2>⚠️ 注意喚起があります</h2>
+  <p><%= simple_format(@novel.caution_reason) %></p>
+  <p>この内容に了承した上で、作品を閲覧しますか？</p>
+
+  <%= button_to "了承して読む", confirm_caution_novel_path(@novel), method: :post, class: "btn btn-primary" %>
+</div>
