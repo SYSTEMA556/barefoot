@@ -1,50 +1,36 @@
-# config/routes.rb
-
 Rails.application.routes.draw do
-    get  "/gate",  to: "age_gate#new"    # フォーム
-  post "/gate",  to: "age_gate#create" # 同意処理
-  devise_for :models
-  # Devise + Twitter OAuth 用
- # devise_for :users, controllers: {
- #   omniauth_callbacks: 'users/omniauth_callbacks'
- # }
+  # 最初のトップページ：年齢確認ゲート
+  root "age_gate#new"  # /gate へのリダイレクトなどが適切
+
+  # 年齢確認ゲート（18歳以上かどうか）
+  get  "/gate",         to: "age_gate#new"     # フォーム
+  post "/gate",         to: "age_gate#create"  # 同意処理
+  post "gate/verify",   to: "gate#verify"      # 同意ボタン処理など
+
+  # Devise 認証
   devise_for :users
-  # ユーザー情報編集・確認メール用
   resources :users, only: [:show, :edit, :update] do
     get :confirm_email, on: :collection
-    # ヘルスチェック
-    get "up" => "rails/health#show", as: :rails_health_check
+    get "up", to: "rails/health#show", as: :rails_health_check
   end
 
-  # トップページ：小説一覧
-  root "novels#index"
- #  get '/auth/:provider/callback', to: 'sessions#create'
-  # get '/auth/failure',            to: 'sessions#failure'
-  get    'logout/confirm', to: 'pages#logout', as: :logout_confirm
+  # 小説ページ一覧（同意後に遷移する場所）
+  get "/home", to: "novels#index"  # 事実上のトップページ
 
-  get 'terms_and_privacy', to: 'pages#terms_and_privacy', as: 'terms_and_privacy'
-
-#delete '/logout', to: 'devise/sessions#destroy', as: :logout
-  # ノベル関連
+  # 小説関連ルート
   resources :novels, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-    # パスワード認証用
     member do
       get  :enter_password
       post :verify_password
-     post :confirm_caution  # /novels/:id/confirm_caution
-    end
-
-    # トグル式ブックマーク
-    member do
+      post :confirm_caution
       post :toggle_bookmark
     end
 
-    # マイページ／プレビュー用
     collection do
-      get  :bookmarks    # /novels/bookmarks
-      get  :my_posts     # /novels/my_posts
-      get  :drafts       # /novels/drafts
-      post :preview      # /novels/preview
+      get  :bookmarks
+      get  :my_posts
+      get  :drafts
+      post :preview
     end
 
     # コメント機能
@@ -55,18 +41,20 @@ Rails.application.routes.draw do
       end
     end
 
-    # ── ここに追加 ──
-    # ノベルごとの Bookmark リソース（作成・解除）
+    # ブックマークのリソース化（単体）
     resource :bookmark, only: [:create, :destroy]
-    # ─────────────
   end
 
-  # 全ユーザーのブックマーク一覧
+  # ブックマーク一覧
   resources :bookmarks, only: [:index]
- # get 'logout', to: 'pages#logout', as: :logout
 
-  # Devise のサインアウトは DELETE だから、ボタンで飛ばすの
-  # 開発環境限定：送信メールプレビュー
+  # 規約表示ページ
+  get 'terms_and_privacy', to: 'pages#terms_and_privacy', as: 'terms_and_privacy'
+
+  # ログアウト確認ページ
+  get 'logout/confirm', to: 'pages#logout', as: :logout_confirm
+
+  # 開発環境のみ：メールプレビュー
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
