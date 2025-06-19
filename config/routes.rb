@@ -1,6 +1,8 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
+    get  "/gate",  to: "age_gate#new"    # フォーム
+  post "/gate",  to: "age_gate#create" # 同意処理
   devise_for :models
   # Devise + Twitter OAuth 用
  # devise_for :users, controllers: {
@@ -19,8 +21,9 @@ Rails.application.routes.draw do
  #  get '/auth/:provider/callback', to: 'sessions#create'
   # get '/auth/failure',            to: 'sessions#failure'
   get    'logout/confirm', to: 'pages#logout', as: :logout_confirm
-  get  "/gate",  to: "age_gate#new"    # フォーム
-  post "/gate",  to: "age_gate#create" # 同意処理
+
+  get 'terms_and_privacy', to: 'pages#terms_and_privacy', as: 'terms_and_privacy'
+
 #delete '/logout', to: 'devise/sessions#destroy', as: :logout
   # ノベル関連
   resources :novels, only: [:index, :show, :new, :create, :edit, :update, :destroy] do

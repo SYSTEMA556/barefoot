@@ -8,12 +8,12 @@
       <%= label_tag :adult, "私は18歳以上です" %>
     </div>
 
-    <div class="mb-4">
-      <%= check_box_tag :agree_tos, "1", false %>
-      <%= label_tag :agree_tos do %>
-        利用規約・プライバシーポリシーに同意します
-      <% end %>
-    </div>
+<div class="mb-4">
+ <%= check_box_tag :agree_tos, "1", false, id: "agree_tos" %>
+<%= label_tag :agree_tos, class: "form-check-label" do %>
+  <%= link_to "利用規約・プライバシーポリシー", terms_and_privacy_path, target: "_blank", rel: "noopener" %>に同意します
+<% end %>
+</div>
 
     <%= f.submit "入館する", class: "btn btn-primary w-100" %>
   <% end %>
