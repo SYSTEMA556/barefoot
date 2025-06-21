@@ -4,6 +4,9 @@ ja:
       messages:
         blank:          "を入力してください"
         record_invalid: "バリデーションに失敗しました: %{errors}"
+        not_saved:
+          one:   "1 件のエラーが発生したため %{resource} は保存されませんでした。"
+          other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
     models:
       user:  "ユーザー"
       novel: "小説"
