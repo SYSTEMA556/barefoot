@@ -42,6 +42,9 @@ gem "bootsnap", require: false
 # Security
 gem "bcrypt", "~> 3.1.7"
 
+
+
+
 # Faker for development/test data
 gem "faker"
 
