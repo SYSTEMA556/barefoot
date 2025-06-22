@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root "age_gate#new"  # /gate へのリダイレクトなどが適切
 
   # 年齢確認ゲート（18歳以上かどうか）
-  get  "/gate",         to: "age_gate#new"     # フォーム
+  get  "/gate",         to: "age_gate#new"  ,    as: :gate    # フォーム
   post "/gate",         to: "age_gate#create"  # 同意処理
   post "gate/verify",   to: "gate#verify"      # 同意ボタン処理など
 

@@ -1,6 +1,5 @@
 class AgeGateController < ApplicationController
   layout "gate"  # ロゴだけのシンプルなレイアウト
-  skip_before_action :ensure_agreed_terms, only: [:new, :create]
 
   def new
     # 直前に見ようとしていたページがあれば記憶しておく
