@@ -1,9 +1,10 @@
 class AgeGateController < ApplicationController
   layout "gate"  # ロゴだけのシンプルなレイアウト
+  skip_before_action :ensure_agreed_terms, only: [:new, :create]
 
   def new
     # 直前に見ようとしていたページがあれば記憶しておく
-    session[:return_to] ||= request.referer unless on_gate_page?
+   # session[:return_to] ||= request.referer unless on_gate_page?
   end
 
   def create

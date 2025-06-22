@@ -50,13 +50,13 @@ Rails.application.configure do
   if Rails.env.production?
     # Action Mailer のリンク生成用
     config.action_mailer.default_url_options = {
-      host: 'barefoot-b2x6.onrender.com',
+      host: 'barefoot-5.onrender.com',  # ← 正しいホスト名に修正すること
       protocol: 'https'
     }
 
     # ルーティングヘルパーでのリンク生成にも同様に
     Rails.application.routes.default_url_options = {
-      host: 'barefoot-b2x6.onrender.com',
+      host: 'barefoot-5.onrender.com',
       protocol: 'https'
     }
 
@@ -97,7 +97,7 @@ config.cache_store = :memory_store, { size: 64.megabytes }
 
   # メール内 URL 生成用のホスト／プロトコル
   config.action_mailer.default_url_options = {
-    host:     'barefoot-b2x6.onrender.com',
+    host:     'barefoot-5.onrender.com',
     protocol: 'https'
   }
 
@@ -105,7 +105,7 @@ config.cache_store = :memory_store, { size: 64.megabytes }
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',                               # SMTP サーバ
     port:                 587,                                            # ポート
-    domain:               'barefoot-b2x6.onrender.com',                   # 自ドメイン
+    domain:               'barefoot-5.onrender.com',                   # 自ドメイン
     user_name:            Rails.application.credentials.dig(:smtp, :user_name), # Gmail アドレス
     password:             Rails.application.credentials.dig(:smtp, :password),  # アプリパスワード
     authentication:       'plain',                                        # 認証方式
