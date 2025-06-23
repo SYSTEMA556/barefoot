@@ -1,7 +1,10 @@
-<p>Hello <%= @email %>!</p>
+<p><%= @email %> 様、ごきげんよう。</p>
+
+<p>私、レミリア・スカーレットがご連絡申し上げますわ。</p>
 
 <% if @resource.try(:unconfirmed_email?) %>
-  <p>We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.</p>
+  <p>貴方のメールアドレスが現在 <%= @resource.unconfirmed_email %> に変更されようとしておりますの。</p>
+  <p>もしお心当たりがなければ、こちらのご連絡をどうぞご無視くださいませ。</p>
 <% else %>
-  <p>We're contacting you to notify you that your email has been changed to <%= @resource.email %>.</p>
+  <p>貴方のメールアドレスが無事 <%= @resource.email %> に変更されましたことをお知らせいたしますわ。</p>
 <% end %>

@@ -48,6 +48,13 @@ ja:
       send_instructions: "数分以内にロック解除の案内メールが届きます。"
       send_paranoid_instructions: "もしアカウントが存在すれば、数分以内にロック解除の案内メールが届きます。"
       unlocked: "アカウントのロックを解除しました。サインインしてください。"
+    links:
+      sign_in: "ログイン"
+      sign_up: "新規登録"
+      forgot_password: "パスワードをお忘れですか？"
+      did_not_receive_confirmation: "確認メールが届かない場合はこちら"
+      did_not_receive_unlock: "ロック解除用メールが届かない場合はこちら"
+      sign_in_with: "%{provider}でサインイン"
 
   activerecord:
     errors:
