@@ -57,12 +57,25 @@ ja:
       sign_in_with: "%{provider}でサインイン"
 
   activerecord:
+    # 属性名の日本語訳を追加
+    attributes:
+      user:
+        email: "Eメールアドレス"
+        username: "ユーザー名"
+
     errors:
       models:
         user:
           attributes:
             reset_password_token:
               invalid: "パスワードリセット用トークンが無効です"
+            email:
+              taken: "はすでに使用されています"
+            username:
+              taken: "はすでに使用されています"
+      # 汎用の「重複」メッセージ
+      messages:
+        taken: "はすでに存在します"
 
   errors:
     messages:
@@ -74,3 +87,4 @@ ja:
       not_saved:
         one:   "1つのエラーにより%{resource}を保存できませんでした:"
         other: "%{count}件のエラーにより%{resource}を保存できませんでした:"
+      taken: "はすでに存在します"
