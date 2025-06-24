@@ -19,13 +19,13 @@ Rails.application.configure do
   config.require_master_key = true
 
   # 静的ファイルの配信は Web サーバ（NGINX/Apache）に任せる
-  # config.public_file_server.enabled = false
-
+   config.public_file_server.enabled = true
+  config.assets.debug = false
   # CSS の圧縮に Sass を使用
   # config.assets.css_compressor = :sass
 
   # アセットパイプラインのフォールバックは無効
-  config.assets.compile = false
+  config.assets.compile = true
 
   # 画像・スタイルシート・JavaScript を CDN 等から配信する場合は asset_host を設定
   # config.asset_host = "https://assets.example.com"
