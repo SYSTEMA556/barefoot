@@ -5,71 +5,71 @@ class NovelsController < ApplicationController
 
   skip_before_action :verify_authenticity_token, only: [:preview]
 
+
+
   def index
-  @q = Novel.ransack(params[:q])
-  page     = (params[:page] || 1).to_i
-  per_page = 50
-  
+    @q        = Novel.ransack(params[:q])
+    page      = (params[:page] || 1).to_i
+    per_page  = 50
 
-    #★ キャッシュキーをここで定義しないと NameError になるの  
-    q_hash = params[:q]&.to_unsafe_h || {}
-  query_segment = q_hash.sort.map { |k, v| "#{k}=#{v}" }.join("&")
-  cache_key = [
-    "novels/index",
-    query_segment.present? ? query_segment : "no_query",
-    params[:sort] || 'default',
-    "page:#{page}"
-  ].join("/")
+    # ─── ここでローカル変数としてキーを生成 ───
+    q_hash        = params[:q]&.to_unsafe_h || {}
+    query_segment = q_hash.sort.map { |k,v| "#{k}=#{v}" }.join("&")
+    local_key = [
+      "novels/index",
+      query_segment.present? ? query_segment : "no_query",
+      params[:sort] || "default",
+      "page:#{page}"
+    ].join("/")
 
-  cache_data = Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
-    Rails.logger.info "★ Cache MISS: #{cache_key}"
+    # ─── 生成したキーをインスタンス変数に代入 ───
+    @page_cache_key = local_key
 
-      # ① 検索結果の Relation を取得  
-    base = @q.result(distinct: true).includes(:user, :tags)
+    # ─── ここでキャッシュフェッチ ───
+    cache_data = Rails.cache.fetch(@page_cache_key, expires_in: 30.minutes) do
+      Rails.logger.info "★ Cache MISS: #{@page_cache_key}"
 
-    sorted = case params[:sort]
-             when 'comments'
-               base.left_joins(:comments)
-                   .group('novels.id')
-                   .order('COUNT(comments.id) DESC, novels.created_at DESC')
-             when 'views'
-               base.order(view_count: :desc, created_at: :desc)
-             when 'updated_at'
-               base.order(updated_at: :desc)
-             else
-               base.order(created_at: :desc)
-             end
+      base = @q.result(distinct: true).includes(:user, :tags)
+      sorted = case params[:sort]
+               when "comments"
+                 base.left_joins(:comments)
+                     .group("novels.id")
+                     .order("COUNT(comments.id) DESC, novels.created_at DESC")
+               when "views"
+                 base.order(view_count: :desc, created_at: :desc)
+               when "updated_at"
+                 base.order(updated_at: :desc)
+               else
+                 base.order(created_at: :desc)
+               end
 
-    paginated = sorted.page(page).per(per_page)
-    counts = Comment.where(novel_id: paginated.map(&:id))
-                    .group(:novel_id)
-                    .count
+      paginated = sorted.page(page).per(per_page)
+      counts    = Comment.where(novel_id: paginated.map(&:id))
+                         .group(:novel_id)
+                         .count
 
-    {
-      novels: paginated.to_a,
-      total_count: paginated.total_count,
-      comment_counts: counts
-    }
+      {
+        novels:         paginated.to_a,
+        total_count:    paginated.total_count,
+        comment_counts: counts
+      }
+    end
+    Rails.logger.info "★ Cache HIT: #{@page_cache_key}" if Rails.cache.exist?(@page_cache_key)
+
+    @novels         = Kaminari.paginate_array(cache_data[:novels], total_count: cache_data[:total_count])
+                              .page(page).per(per_page)
+    @comment_counts = cache_data[:comment_counts]
   end
-
-  Rails.logger.info "★ Cache HIT: #{cache_key}" if Rails.cache.exist?(cache_key)
-
-
-    #★ Kaminari の配列ページネーションに復元  
-  @novels = Kaminari.paginate_array(
-    cache_data[:novels],
-    total_count: cache_data[:total_count]
-  ).page(page).per(per_page)
-
-  @comment_counts = cache_data[:comment_counts]
-end
 
   def preview
     @novel          = Novel.new(novel_params)
     @preview_params = novel_params
     render :preview
   end
-
+def meta
+  novel = Novel.find(params[:id])
+  render partial: "novels/meta", locals: { novel: novel }
+end
 
 def show
   # ✅ 二重取得を削除

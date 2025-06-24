@@ -67,6 +67,7 @@ group :development do
   gem "letter_opener", "~> 1.10"
   gem "letter_opener_web"
   gem "rails-i18n", "~> 7.0"
+  gem 'rack-mini-profiler'
 
 end
 

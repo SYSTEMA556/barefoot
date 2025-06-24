@@ -19,11 +19,14 @@ Rails.application.routes.draw do
 
   # 小説関連ルート
   resources :novels, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+          get :meta, on: :member
     member do
       get  :enter_password
       post :verify_password
       post :confirm_caution
       post :toggle_bookmark
+
+
     end
 
     collection do
