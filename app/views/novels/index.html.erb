@@ -1,5 +1,5 @@
 <%# “cache_key_with_version” は Relation では使えませんので “cache_key” に変更いたしますわ♡ %>
-<% cache @page_cache_key do %>
+<% cache [@novels.to_a.cache_key_with_version, params[:page]] do %>
 
 <div class="d-flex flex-column flex-sm-row">
   <div class="container my-5" style="max-width: 1100px;">
