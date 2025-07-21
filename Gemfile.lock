@@ -88,8 +88,6 @@ GEM
     benchmark (0.4.0)
     bigdecimal (3.1.9)
     bindex (0.8.1)
-    bootsnap (1.18.4)
-      msgpack (~> 1.2)
     bootstrap (5.3.5)
       popper_js (>= 2.11.8, < 3)
     bootstrap5-kaminari-views (0.0.1)
@@ -188,7 +186,6 @@ GEM
     matrix (0.4.2)
     mini_mime (1.1.5)
     minitest (5.25.5)
-    msgpack (1.8.0)
     mutex_m (0.3.0)
     net-imap (0.5.8)
       date
@@ -217,7 +214,6 @@ GEM
     nokogiri (1.18.8-x86_64-linux-musl)
       racc (~> 1.4)
     orm_adapter (0.5.0)
-    pg (1.5.9)
     popper_js (2.11.8)
     pp (0.6.2)
       prettyprint
@@ -230,8 +226,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.14)
-    rack-mini-profiler (4.0.0)
-      rack (>= 1.2.0)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -278,10 +272,6 @@ GEM
       i18n
     rdoc (6.13.1)
       psych (>= 4.0.0)
-    redis (5.4.0)
-      redis-client (>= 0.22.0)
-    redis-client (0.24.0)
-      connection_pool
     regexp_parser (2.10.0)
     reline (0.6.1)
       io-console (~> 0.5)
@@ -330,6 +320,11 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    sqlite3 (1.7.3-aarch64-linux)
+    sqlite3 (1.7.3-arm-linux)
+    sqlite3 (1.7.3-arm64-darwin)
+    sqlite3 (1.7.3-x86_64-darwin)
+    sqlite3 (1.7.3-x86_64-linux)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.7)
@@ -371,7 +366,6 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on
   bcrypt (~> 3.1.7)
-  bootsnap
   bootstrap (~> 5.3.0)
   bootstrap5-kaminari-views
   capybara
@@ -384,17 +378,15 @@ DEPENDENCIES
   kaminari
   letter_opener (~> 1.10)
   letter_opener_web
-  pg (~> 1.1)
   puma (>= 5.0)
-  rack-mini-profiler
   rails (~> 7.1.5, >= 7.1.5.1)
   rails-i18n (~> 7.0)
   ransack
-  redis (>= 4.0.1)
   rspec-rails
   sassc-rails
   selenium-webdriver
   sprockets-rails
+  sqlite3 (~> 1.6)
   stimulus-rails
   turbo-rails
   tzinfo-data

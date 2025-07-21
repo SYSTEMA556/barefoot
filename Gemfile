@@ -9,7 +9,7 @@ gem "rails", "~> 7.1.5", ">= 7.1.5.1"
 gem "sprockets-rails"
 
 # Database adapter
-gem "pg", "~> 1.1"
+gem "sqlite3", "~> 1.6"
 
 # Web server
 gem "puma", ">= 5.0"
@@ -36,8 +36,8 @@ gem "bootstrap5-kaminari-views"
 gem "jbuilder"
   gem "ransack"
 # Caching & performance
-gem "redis", ">= 4.0.1"
-gem "bootsnap", require: false
+#gem "redis", ">= 4.0.1"
+#gem "bootsnap", require: false
 
 # Security
 gem "bcrypt", "~> 3.1.7"
@@ -67,7 +67,7 @@ group :development do
   gem "letter_opener", "~> 1.10"
   gem "letter_opener_web"
   gem "rails-i18n", "~> 7.0"
-  gem 'rack-mini-profiler'
+#  gem 'rack-mini-profiler'
 
 end
 

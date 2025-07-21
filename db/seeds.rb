@@ -7,7 +7,7 @@ if defined?(Faker)
   80.times do |i|
     title       = Faker::Book.title
     author_name = Faker::Name.name
-    body        = Faker::Lorem.paragraph(sentence_count: 5)
+    body        = Faker::Lorem.paragraph(sentence_count: 980)
     font        = ["こぶり明朝", "游ゴシック", "MS明朝", "ヒラギノ角ゴ", "Shippori Mincho", "Noto Serif JP"].sample
     password    = "novelpass#{i + 1}"
 
@@ -18,7 +18,7 @@ if defined?(Faker)
       font_choice:          font,
       password:             password,
       password_confirmation: password,
-      status:               ["draft", "published"].sample
+      #status:               ["draft", "published"].sample
     )
 
     # ログはインターバルを置かないと見づらいので、1000件ごとにだけ出す
@@ -41,7 +41,7 @@ else
       font_choice:          font,
       password:             password,
       password_confirmation: password,
-      status:               (i.even? ? "draft" : "published")
+     # status:               (i.even? ? "draft" : "published")
     )
 
     puts "Created dummy novel #{i+1}/80..." if (i + 1) % 1_000 == 0
